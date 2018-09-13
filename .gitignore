@@ -1,0 +1,8 @@
+# Fichiers à ignorer du Git Push
+# 13 septembre 2018
+
+*.out
+*.log
+*.toc
+*.aux
+*.synctex.gz
