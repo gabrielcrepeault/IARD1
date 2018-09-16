@@ -13,6 +13,7 @@ Notes de cours}
 \author{Gabriel Crépeault-Cauchon \\
 Nicholas Langevin}
 
+
 % -----------------------------------
 % --- DÉBUT DU DOCUMENT ---
 \begin{document}
@@ -34,7 +35,43 @@ Ce document résume les notes de cours prises en classe dans le cours de Mathém
 \chapter{Rappel sur les notions de probabilité et statistiques}
 \section{Quantités à savoir}
 
-\paragraph{Moments}
+\paragraph{\textit{Raw moments}}
+On représente le $k$\up{e} moment par $\mu_k^\prime$, soit
+\begin{equation}
+\mu_k^\prime = \esp{X^k} 
+\end{equation}
+
+\paragraph{Moments centraux} Le $k$\up{e} moment central est représenté par
+\begin{equation}
+\mu_k = \esp{(X - \mu)^k}
+\end{equation}
+
+\begin{exemple}[Quelques exemples de moments centraux]
+La variance est le 2\up{e} moment central : 
+\begin{align*}
+Var(X) = \mu_2 =  \esp{(X - \mu)^2} \\
+\end{align*}
+Le 3\up{e} moment centré, qui est utilisé pour calculer le coefficient d'asymétrie : 
+\begin{align*}
+\mu_3 = \esp{(X-\mu)^3}
+\end{align*}
+\end{exemple}
+
+\paragraph{Coefficient d'asymétrie}
+Le coefficient d'asymétrie, aussi appelé \textit{skewness}, est représentée par
+\begin{equation}
+S_k = \frac{\mu_3}{\sigma^2}
+\end{equation}
+Soit le 3\up{e} moment standarisé. Si $S_k = 0$, alors la distribution tend vers une loi normale.
+
+\paragraph{Coefficient d'applatissement}
+Le coefficient d'applatissement, aussi appelé \textit{Kurtosis}, se définit par
+\begin{equation}
+\text{Kurtosis} = \frac{\mu_4}{\sigma^4}
+\end{equation}
+Cette quantité permet de mesurer l'épaisseur de l'aile (\textit{tail}) de la distribution. Si $\esp{z^4} =3$, alors la distribution tend vers une loi normale $N(\mu, \sigma^2)$.
+
+
 
 
 
