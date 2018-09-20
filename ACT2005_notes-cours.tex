@@ -33,7 +33,8 @@ Ce document résume les notes de cours prises en classe dans le cours de Mathém
 % --------------
 
 \chapter{Rappel sur les notions de probabilité et statistiques}
-\section{Quantités à savoir}
+Référence : Chapitre 3 du livre
+\section{les moments}
 
 \paragraph{\textit{Raw moments}}
 On représente le $k$\up{e} moment par $\mu_k^\prime$, soit
@@ -62,7 +63,7 @@ Le coefficient d'asymétrie, aussi appelé \textit{skewness}, est représentée 
 \begin{equation}
 S_k = \frac{\mu_3}{\sigma^2}
 \end{equation}
-Soit le 3\up{e} moment standarisé. Si $S_k = 0$, alors la distribution tend vers une loi normale.
+Soit le 3\up{e} moment standari	sé. Si $S_k = 0$, alors la distribution tend vers une loi normale.
 
 \paragraph{Coefficient d'applatissement}
 Le coefficient d'applatissement, aussi appelé \textit{Kurtosis}, se définit par
@@ -70,6 +71,47 @@ Le coefficient d'applatissement, aussi appelé \textit{Kurtosis}, se définit pa
 \text{Kurtosis} = \frac{\mu_4}{\sigma^4}
 \end{equation}
 Cette quantité permet de mesurer l'épaisseur de l'aile (\textit{tail}) de la distribution. Si $\esp{z^4} =3$, alors la distribution tend vers une loi normale $N(\mu, \sigma^2)$.
+
+\paragraph{\textit{Excess Loss variable}}
+Cette variable aléatoire représente la perte $X - d$, lorsque $X > d$, i.e.
+\begin{align*}
+Y^P = X - d | X > d
+\end{align*}
+On peut donc trouver l'espérance de cette variable aléatoire : 
+\begin{equation}
+e_X(d)  = \esp{Y^P} = \esp{X - d | X > d}
+\end{equation}
+Souvent, on va voir le \textit{mean excess loss} exprimé ainsi : 
+\begin{equation}
+e_X(d) = \frac{\int_{d}^{\infty} S(x) dx}{S(d)}
+\end{equation}
+
+\paragraph{\textit{Left censored and shifted variable}}
+Dans certaines contrats, il est prévu que l'assureur ne paiera aucune perte en dessous d'un montant $d$, et par la suite il va payer la différence entre la perte et ce montant. Mathématiquement,
+\begin{align*}
+Y^L	& = (X-d)_+ = \begin{cases}
+0	& ,X \leq d \\
+X - d & ,X > d \\
+\end{cases}
+\end{align*}
+Encore une fois, on peut calculer l'espérance de cette variable aléatoire : 
+\begin{equation}
+\esp{(X-d)_+^k} = e^k(d) (1 - F(d))
+\end{equation}
+
+\paragraph{\textit{Limited loss variable}}
+Il s'agit du contexte de limite, où la perte de l'assureur est limité à un montant $u$, prédéterminé à l'avance. Mathématiquement,
+\begin{align*}
+Y = X \wedge u = \begin{cases}
+X & ,X < u \\
+u & ,X \geq u \\
+\end{cases}
+\end{align*}
+L'espérance (\textit{limited expected value}) est représentée par
+\begin{equation}
+\esp{(X \wedge u)^k} = \int_{-\infty}^{u} x^k f_X(x) dx + u^k (1- F(u)) 
+\end{equation}
+
 
 
 

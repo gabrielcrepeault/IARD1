@@ -1,6 +1,0 @@
-\chapter{Test avec Sweave}
-<<>>=
-x <- 4
-x
-@
-
