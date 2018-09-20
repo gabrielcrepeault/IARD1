@@ -11,6 +11,7 @@ foo <- function(x)
     else
     {
         print(' Bye now.')
+        print('Ceci est une modification à la version initiale.')
     }
 }
 ## Exemple
