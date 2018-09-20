@@ -1,0 +1,123 @@
+% Notes de cours pour ACT-2005
+% Automne 2018
+\documentclass[12pt, french]{report}
+
+% Lien vers un template de préambule
+\input{preambule/preambule_utf8.tex}
+% \input{preambule/code-listing_setup.tex}
+
+% Information sur le document
+\title{Mathématiques actuarielles IARD-1 \\
+ACT-2005 \\
+Notes de cours}
+\author{Gabriel Crépeault-Cauchon \\
+Nicholas Langevin}
+
+
+% -----------------------------------
+% --- DÉBUT DU DOCUMENT ---
+\begin{document}
+
+% Page titre
+\maketitle
+
+% Table des matières
+\tableofcontents
+
+% --- DÉBUT DE LA RÉDACTION ---
+
+% --- RÉSUMÉ ---
+\begin{abstract}
+Ce document résume les notes de cours prises en classe dans le cours de Mathématiques actuarielles IARD-1, ainsi que des notions prises du livre \textit{LOSS MODELS - From Data to Decisions, 4\up{th} edition}.
+\end{abstract}
+% --------------
+
+\chapter{Rappel sur les notions de probabilité et statistiques}
+\section{Quantités à savoir}
+
+\paragraph{\textit{Raw moments}}
+On représente le $k$\up{e} moment par $\mu_k^\prime$, soit
+\begin{equation}
+\mu_k^\prime = \esp{X^k} 
+\end{equation}
+
+\paragraph{Moments centraux} Le $k$\up{e} moment central est représenté par
+\begin{equation}
+\mu_k = \esp{(X - \mu)^k}
+\end{equation}
+
+\begin{exemple}[Quelques exemples de moments centraux]
+La variance est le 2\up{e} moment central : 
+\begin{align*}
+Var(X) = \mu_2 =  \esp{(X - \mu)^2} \\
+\end{align*}
+Le 3\up{e} moment centré, qui est utilisé pour calculer le coefficient d'asymétrie : 
+\begin{align*}
+\mu_3 = \esp{(X-\mu)^3}
+\end{align*}
+\end{exemple}
+
+\paragraph{Coefficient d'asymétrie}
+Le coefficient d'asymétrie, aussi appelé \textit{skewness}, est représentée par
+\begin{equation}
+S_k = \frac{\mu_3}{\sigma^2}
+\end{equation}
+Soit le 3\up{e} moment standarisé. Si $S_k = 0$, alors la distribution tend vers une loi normale.
+
+\paragraph{Coefficient d'applatissement}
+Le coefficient d'applatissement, aussi appelé \textit{Kurtosis}, se définit par
+\begin{equation}
+\text{Kurtosis} = \frac{\mu_4}{\sigma^4}
+\end{equation}
+Cette quantité permet de mesurer l'épaisseur de l'aile (\textit{tail}) de la distribution. Si $\esp{z^4} =3$, alors la distribution tend vers une loi normale $N(\mu, \sigma^2)$.
+
+\section{La loi normale}
+
+\paragraph{La fonction génératrice des moments}
+\begin{align*}
+    M_x(t) &= M_x(0) + \frac{M_x^\prime t}{1!} + \frac{M_x^{\prime\prime} t^2}{2!} + ... + \frac{M_x^{(n) t^n}}{n!} \\
+           &= 1 + \frac{E[x] t}{1!} + \frac{E[x^2] t^2}{2!} + ... + \frac{E[x^n] t^n}{n!}
+\end{align*}
+
+On pose: $c_k = \frac{E[x^n]}{n!}$ alors,
+
+\begin{equation}
+    E[x^k] = C_k k!
+\end{equation}
+
+\section{Queue de distribution}
+
+\begin{enumerate}
+    \item Sois $f_1(x)$ une fonction tels que les 3 premiers moment existe: $E[x^4] = \infty$
+    \item Sois $f_2(x)$ une fonction tels que les 2 premiers moment existe: $E[x^2] = \infty$
+\end{enumerate}
+Alors,
+\begin{align*}
+    \lim_{x\to\infty} r(x) = \frac{f_1(x)}{f_2(x)} = \left\{
+                                                        \begin{array}{ll}
+                                                            \infty ,\: f_1(x) \text{a une aile plus lourde que} f_2(x) \\
+                                                            0      ,\: f_2(x) \text{a une aile plus lourde que} f_1(x) 
+                                                        \end{array}
+                                                    \right.
+\end{align*}
+\begin{exemple}
+    Sois $f_{x_1}(x_1) \sim pareto(\alpha, \theta)$ et $f_{x_2}(x_2) \sim gamma(\alpha, \lambda)$ 
+    \begin{align*}
+        \lim_{x\to\infty} r(x) &= \lim_{x\to\infty} \frac{f_{x_1}(x_1)}{f_{x_2}(x_2)} \\
+                               &= \frac{\frac{\alpha \theta^\alpha}{(x + \theta)^{\alpha + 1}}}{\lambda^\alpha x^{\alpha - 1} e^{-\lambda x}} \\
+                               &= C \frac{e^{-\lambda x}}{x^{\alpha - 1} (x + \theta)^{\alpha + 1}} \\
+                               &= \infty
+    \end{align*}      
+    La pareto a une queue plus lourde que la gamma
+\end{exemple}
+
+\paragraph{La fonction de hasard}
+\begin{equation}
+    h(x) = \frac{f(x)}{s(x)}
+\end{equation}
+Si à partir de M, $h(x)$ est décroissante $\Leftrightarrow$ $f(x)$ décroit trop lentement, alors $f(x)$ à une aile lourde. 
+
+
+
+
+\end{document}
