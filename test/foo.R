@@ -17,3 +17,8 @@ foo <- function(x)
 ## Exemple
 foo(3)
 foo(0)
+
+bar <- function(x){
+    print(paste("Hello gab!", x))
+}
+bar(10)
