@@ -22,3 +22,4 @@ bar <- function(x){
     print(paste("Hello gab!", x))
 }
 bar(10)
+bar(15)
