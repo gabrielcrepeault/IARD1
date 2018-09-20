@@ -71,8 +71,51 @@ Le coefficient d'applatissement, aussi appelé \textit{Kurtosis}, se définit pa
 \end{equation}
 Cette quantité permet de mesurer l'épaisseur de l'aile (\textit{tail}) de la distribution. Si $\esp{z^4} =3$, alors la distribution tend vers une loi normale $N(\mu, \sigma^2)$.
 
+\section{La loi normale}
 
+\paragraph{La fonction génératrice des moments}
+\begin{align*}
+    M_x(t) &= M_x(0) + \frac{M_x^\prime t}{1!} + \frac{M_x^{\prime\prime} t^2}{2!} + ... + \frac{M_x^{(n) t^n}}{n!} \\
+           &= 1 + \frac{E[x] t}{1!} + \frac{E[x^2] t^2}{2!} + ... + \frac{E[x^n] t^n}{n!}
+\end{align*}
 
+On pose: $c_k = \frac{E[x^n]}{n!}$ alors,
+
+\begin{equation}
+    E[x^k] = C_k k!
+\end{equation}
+
+\section{Queue de distribution}
+
+\begin{enumerate}
+    \item Sois $f_1(x)$ une fonction tels que les 3 premiers moment existe: $E[x^4] = \infty$
+    \item Sois $f_2(x)$ une fonction tels que les 2 premiers moment existe: $E[x^2] = \infty$
+\end{enumerate}
+Alors,
+\begin{align*}
+    \lim_{x\to\infty} r(x) = \frac{f_1(x)}{f_2(x)} = \left\{
+                                                        \begin{array}{ll}
+                                                            \infty ,\: f_1(x) \text{a une aile plus lourde que} f_2(x) \\
+                                                            0      ,\: f_2(x) \text{a une aile plus lourde que} f_1(x) 
+                                                        \end{array}
+                                                    \right.
+\end{align*}
+\begin{exemple}
+    Sois $f_{x_1}(x_1) \sim pareto(\alpha, \theta)$ et $f_{x_2}(x_2) \sim gamma(\alpha, \lambda)$ 
+    \begin{align*}
+        \lim_{x\to\infty} r(x) &= \lim_{x\to\infty} \frac{f_{x_1}(x_1)}{f_{x_2}(x_2)} \\
+                               &= \frac{\frac{\alpha \theta^\alpha}{(x + \theta)^{\alpha + 1}}}{\lambda^\alpha x^{\alpha - 1} e^{-\lambda x}} \\
+                               &= C \frac{e^{-\lambda x}}{x^{\alpha - 1} (x + \theta)^{\alpha + 1}} \\
+                               &= \infty
+    \end{align*}      
+    La pareto a une queue plus lourde que la gamma
+\end{exemple}
+
+\paragraph{La fonction de hasard}
+\begin{equation}
+    h(x) = \frac{f(x)}{s(x)}
+\end{equation}
+Si à partir de M, $h(x)$ est décroissante $\Leftrightarrow$ $f(x)$ décroit trop lentement, alors $f(x)$ à une aile lourde. 
 
 
 
