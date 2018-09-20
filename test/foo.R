@@ -1,4 +1,4 @@
-## Ceci est une fonction foo
+## Allo je vais faire une erreur
 ## Créé par Gabriel Crépeault-Cauchon
 ## 19 septembre 2018
 
