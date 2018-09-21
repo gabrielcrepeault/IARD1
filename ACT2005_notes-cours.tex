@@ -120,4 +120,198 @@ Si à partir de M, $h(x)$ est décroissante $\Leftrightarrow$ $f(x)$ décroit tr
 
 
 
+\chapter{Types de contrats et primes}
+Section 8.1 à 8.5 dans le livre
+
+\paragraph{Rappels}
+
+$d$ : montant du déductible
+
+$X \sim \frac{f(x)}{S(d)}$, $f(X | X > d)$
+
+\begin{align*}
+Y 	& = g(X) \quad ,X \sim f(x) \\
+Y^p	& = g(X)	 \quad ,X \sim \frac{f(x)}{S(d)} \\
+\end{align*}
+
+Il va avoir
+
+\section{Contrat avec limite}
+On analyse la fonction de perte d'un contrat avec une limite supérieure $u$. Alors, on définit $Y$ comme
+
+\begin{align*}
+Y	& = (X \wedge u) \\
+	& = \min(X, u) \\
+ & = 
+\begin{cases}
+x	& , x \leq u \\
+u	& , x > u \\
+\end{cases} \\
+\end{align*}
+Aussi,
+\begin{align*}
+\esp{Y}	& = \esp{\min(X,u)} \\
+	& = \int_{0}^{u} x f_X(x) dx + u \int_{u}^{\infty} f_X(x) dx \\
+	& = \int_{0}^{u} x f_X(x) dx + u S(u) \\
+\end{align*}
+
+\section{Contrat avec déductible ordinaire}
+Soit un contrat avec perte $X$, où on paie 0 si $X \leq d$ et $X-d$ si $X > d$, où $d$ est le déductible ordinaire. Alors,
+\begin{align*}
+Y	& = (X-d)_+ \\
+Y	& = \max(X-d, 0) \\
+Y & = \begin{cases}
+0	& , X \leq d \\
+X - d	&, X > d \\
+\end{cases} \\
+\end{align*}
+
+\subsection{Remarques}
+
+\begin{enumerate}[label=(\arabic*)]
+\item $X$ est une variable aléatoire continue
+
+\item mais $Y$ est une variable aléatoire mixte, car
+\begin{align*}
+\prob{Y = y} & = 
+\begin{cases}
+F_X(d)	& ,y = 0 \\
+f_X(y+d)	& , y > 0 \\
+\end{cases}
+\end{align*}
+
+
+\item La fonction de répartition de $Y$ est définie par
+\begin{align*}
+F_Y(y)	& = 
+\begin{cases}
+F_X(d)	& , y = 0 \\
+F_X(d) + \int_{0}^{y} f_X(u+d) du \\
+\cancel{F_X(d)} + F_X(y+d) \cancel{- F_X(d)} \\
+F_X(y_d)	& y > 0 \\
+\end{cases}
+\end{align*}
+\item les fonctions de survie $S(y)$ et fonction de hasard $h(y)$ sont définies par
+\begin{align*}
+S_Y(y) 	& = 1 - F_Y(y) \\
+h(y)		& = \frac{f_Y(y)}{S_Y(y)} \\
+\end{align*}
+
+\item LA prime de ce contrat est appelée la prime \textit{stop-loss}, qui représente l'espérance de ce contrat.
+\end{enumerate}
+
+\subsection{Prime Stop-Loss}
+On veut calculer l'espérance du contrat avec déductible ordinaire : 
+\begin{align*}
+E[Y]		& = \esp{(X-d)_+} \\
+	& = \int_{d}^{\infty} (x-d) f(x) dx \\
+	& = \underbrace{\int_{d}^{\infty} x f(x) dx}_{\text{Intégration par partie}} - d \int_{d}^{\infty} f(x) dx \\
+	& = -x S(x) \eval_d^\infty + \int_{d}^{\infty} S(x) dx  - s S(d) \\
+	& = 0  \cancel{+ S(d)} +  \int_{d}^{\infty} S(x) dx  \cancel{- S(d)} \\
+	& = \int_{d}^{\infty} S(x) dx \\
+\end{align*}
+
+\begin{definition}[Prime Stop-Loss]
+On peut définir la prime Stop-Loss comme
+\begin{equation}
+\esp{(X-d)_+} = \esp{X} - \esp{X \wedge d}
+\end{equation}
+\begin{proof}
+% Intégrer la preuve faite en dépannage le 20 septembre par Marianne avec les intégrales.
+On sait que (à compléter)
+\end{proof}
+\end{definition}
+
+\section{Mean Excess Loss}
+Le Mean Excess Loss représente la perte excédentaire à $d$, sachant que $X > d$. Mathématiquement,
+\begin{align*}
+Y & = 
+\begin{cases}
+0		& , x \leq d \\
+X - d 	& , x > d \\
+\end{cases}
+\end{align*}
+où $X \sim \frac{f(x)}{S(d)}, x \geq d$.
+
+\subsection{Remarques}
+\begin{enumerate}[label=(\arabic*)]
+\item La fonction de densité de $Y$ est représentée par
+\begin{align*}
+\prob{Y^P = y} & =
+\begin{cases}
+\frac{f_X(y+d)}{S(d)} &  , y > 0 \\
+\end{cases} 
+\end{align*}
+
+\item $Y$ est une v.a. continue
+
+\item les fonctions de survie et de hasard sont, respectivement  :
+\begin{align*}
+h(y)	 	& = \frac{f_Y(y_d)}{S_Y(y+d)} \\
+S(y)		& = \frac{S_X(y+d)}{S(d)} \\
+\end{align*}
+
+\item l'espérance de la v.a. $Y^P$\footnote{Le $P$ en exposant signifie \textit{per pay}, qui indique que $Y$ est conditionnée sur $X$.} (mean excess loss) est définie par
+\begin{align*}
+e(d) & = \esp{Y^P} \\
+	& =  \esp{X - d | X > d} \\
+	& = \int_{d}^{\infty} (x-d) \frac{f(x)}{S(d)} dx \\
+\end{align*}
+On note donc
+\begin{equation}
+e(d) S(d)	= \underbrace{\int_{d}^{\infty} (x-d) f(x) dx}_{\text{Prime Stop-Loss}}
+\end{equation}
+\end{enumerate}
+
+\begin{definition}[Loss Eliminating Ratio]
+Le Loss Eliminating Ratio ($LER$), nous permet d'obtenir le pourcentage de perte qu'on ne paiera pas grâce au déductible $d$ : 
+\begin{align*}
+ELR 	& = \frac{\esp{X} - \esp{(X-d)_+}}{\esp{X}} \\
+\shortintertext{Mais on sait que}
+\esp{(X-d)_+}	& = \esp{X} - \esp{X \wedge d} \\
+\end{align*}
+Alors,
+
+\begin{equation}
+ELR  = \frac{\esp{X \wedge d}}{\esp{X}} 
+\end{equation}
+\end{definition}
+
+\subsection{Contrat avec Déductible franchise}
+Soit $Y$ le contrat qui a un déductible franchise. Dans ce type de contrat, on va payer l'intégralité de la perte, lorsque celle-ci dépassera un déductible. Mathématiquement,
+\begin{align*}
+Y	& = 
+\begin{cases}
+0	& , X \leq d \\
+X	& , X > d \\
+\end{cases}
+\end{align*}
+
+\subsubsection{Caractéristiques}
+\begin{enumerate}[label=(\arabic*)]
+\item La fonction de densité est définie par
+\begin{align*}
+f_Y(y)	& = 
+\begin{cases}
+F_X(d)	&, y = 0 \\
+f_X(y)	&, y > 0 \\
+\end{cases}
+\end{align*}
+
+
+\item La fonction de répartition de ce contrat est
+\begin{align*}
+F_Y(y)	& = 
+\begin{cases}
+F_X(d)	& , y = 0 \\
+F_X(d)	& , 0 < y \leq d \\
+F_X(y)	& , y > d \\
+\end{cases}
+\end{align*}
+
+\end{enumerate}
+
+
+
+
 \end{document}
