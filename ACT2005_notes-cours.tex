@@ -137,6 +137,7 @@ Y^p	& = g(X)	 \quad ,X \sim \frac{f(x)}{S(d)} \\
 Il va avoir
 
 \section{Contrat avec limite}
+\label{sec:limite-sans-inflation}
 On analyse la fonction de perte d'un contrat avec une limite supérieure $u$. Alors, on définit $Y$ comme
 
 \begin{align*}
@@ -154,6 +155,42 @@ Aussi,
 	& = \int_{0}^{u} x f_X(x) dx + u \int_{u}^{\infty} f_X(x) dx \\
 	& = \int_{0}^{u} x f_X(x) dx + u S(u) \\
 \end{align*}
+
+
+
+\subsection{Cas avec inflation}
+On a vu le contrat avec perte limitée, mais sans parler d'inflation. Supposons qu'on a le scénario \underline{avec inflation}, où $X' = (1+r)X$ et $r$ représente le taux d'inflation appliqué au montant de perte. Alors, il faut ajuster $u$ pour tenir compte de l'inflation.
+
+\begin{align*}
+Y & = 
+\begin{cases}
+(1+r) X	&, (1+r)X \leq u \\
+u		&, (1+r) X > u \\
+\end{cases} \\
+	& = 
+\begin{cases}
+(1+r)X	&, x \leq \frac{u}{1+r} \\
+u		&, x > \frac{u}{1+r} \\
+\end{cases} \\
+\end{align*}
+\begin{definition}[Prime Limited Loss sous l'inflation]
+\begin{equation}
+\esp{X' \wedge u} = (1+r) \esp{X  \wedge \frac{u}{1+r}} 
+\end{equation}
+\end{definition}
+
+\begin{proof}
+\begin{align*}
+\esp{Y}	& = \int_{0}^{\frac{u}{1+r}} (1+r) x f_X(x) dx  + u \int_{\frac{u}{1+r}}^{\infty} f_X(x) dx \\
+	& = (1+r) \int_{0}^{\frac{d}{1+r}} f f_X(x) dx + s S_X \left( \frac{u}{1+r} \right) \\
+	& = (1+r) \left( \int_{0}^{\frac{u}{1+r}} x f_X(x) dx  + \frac{u}{1+r} S_X \left( \frac{u}{1+r} \right)    \right)	 \\
+	& = (1+r) \esp{X  \wedge \frac{u}{1+r}}  \\
+\end{align*}
+\end{proof}
+
+
+
+
 
 \section{Contrat avec déductible ordinaire}
 Soit un contrat avec perte $X$, où on paie 0 si $X \leq d$ et $X-d$ si $X > d$, où $d$ est le déductible ordinaire. Alors,
@@ -221,6 +258,44 @@ On peut définir la prime Stop-Loss comme
 On sait que (à compléter)
 \end{proof}
 \end{definition}
+
+\subsection{Cas avec inflation}
+\begin{align*}
+Y	& = 
+\begin{cases}
+0		&, X' \leq d \\
+X' - d	&, d' > d \\
+\end{cases}
+\end{align*}
+où $X' = (1+r)X$. On peut travailler seulement avec le $X$ initial : 
+\begin{align*}
+Y	& = 
+\begin{cases}
+0			&, x \leq \frac{d}{1+r} \\
+(1+r)X - d 	&, x > \frac{d}{1+r} \\
+\end{cases}
+\end{align*}
+
+Et la prime \textit{Stop-Loss},
+\begin{align*}
+\esp{Y}		& = \int_{\frac{d}{1+r}}^{\infty} ((1+r) x - d) f_X(x) dx \\
+			& = (1+r) \int_{\frac{d}{1+r}}^{\infty} x f_X(x) dx - \frac{d}{1+r} \int_{\frac{d}{1+r}}^{\infty} f_X(x) dx \\
+\end{align*}
+
+\begin{definition}[Prime Stop-Loss sous le scénario d'inflation]
+\begin{equation}
+\esp{(X'-d)_+} = (1+r) \left( \esp{X} - \esp{X \wedge \frac{d}{1+r}} \right)
+\end{equation}
+\end{definition}
+\begin{proof}
+\begin{align*}
+\esp{Y}	& = (1+r) \int_{\frac{d}{1+r}}^{\infty} x f_X(x) dx - d \int_{\frac{d}{1+r}}^{\infty} f_X(x) dx \\
+	\shortintertext{En ajoutant un terme,} \\
+	& = \underbrace{(1+r) \blue{\int_{0}^{\frac{d}{1+r}} x f_X(x) dx} + \int_{\frac{d}{1+r}}^{\infty} x f_X(x) dx}_{\esp{X}} - \underbrace{\blue{ \int_{0}^{\frac{d}{1+r}} x f_X(x) dx} - \frac{d}{1+r} \int_{\frac{d}{1+r}}^{\infty} f_X(x) dx}_{\esp{X \wedge \frac{d}{1+r}}} \\ 
+	& = \esp{X} - \esp{X \wedge \frac{d}{1+r}} \\
+\end{align*}
+\end{proof}
+
 
 \section{Mean Excess Loss}
 Le Mean Excess Loss représente la perte excédentaire à $d$, sachant que $X > d$. Mathématiquement,
@@ -305,11 +380,82 @@ F_Y(y)	& =
 \begin{cases}
 F_X(d)	& , y = 0 \\
 F_X(d)	& , 0 < y \leq d \\
-F_X(y)	& , y > d \\
+\frac{F_X(y) - F_X(d)}{S_X(d)}	& , y > d \\
+\end{cases}
+\end{align*}
+\end{enumerate}
+
+
+\section{Contrat avec déductible ordinaire et limite sous l'inflation}
+On peut combiner les contrats vu plus tôt, comme c'est le cas ici : ce contrat prévoit un déductible ordinaire $d$ ainsi qu'une limite au contrat $u$. De plus, on s'intéresse au scénario sous l'inflation.Alors,
+\begin{align*}
+Y & = 
+\begin{cases}
+0				& , X \leq \frac{d}{1+r} \\
+(1+r) X - d		& , \frac{d}{1+r} \leq X \leq \frac{u}{1+r} \\
+u=d				& , X > \frac{u}{1+r} \\
+\end{cases}
+\end{align*}
+Et l'espérance est
+\begin{definition}[Prime d'un contrat avec déductible $d$ et limite $u$]
+\begin{equation}
+\label{eq:prime-contrat-deductible+limite}
+\esp{Y} = (1+r) \left( \esp{X \wedge \frac{u}{1+r}} - \esp{X \wedge \frac{d}{1+r}}   \right)
+\end{equation}
+\end{definition}
+
+\begin{proof}
+On va utiliser $Y = Y_1 - Y_2$ pour prouver \eqref{eq:prime-contrat-deductible+limite}. On définit $Y_1$ et $Y_2$ : 
+\begin{align*}
+Y_1	& = 
+\begin{cases}
+0				& , X \leq \frac{d}{1+r} \\
+(1+r)X - d		& , X  > \frac{d}{1+r} \\
+\end{cases} \\
+Y_2	& = 
+\begin{cases}
+0				& , X \leq \frac{u}{1+r} \\
+(1+r) X - u		& , X > \frac{u}{1+r} \\
+\end{cases} \\
+\shortintertext{On connait leur espérance respective,} \\
+\esp{Y_1}	& = (1+r) \left( \esp{X} - \esp{X \wedge \frac{d}{1+r}} \right) \\
+\esp{Y_2}	& = (1+r) \left(\esp{X} - \esp{X \wedge \frac{u}{1+r}} \right) \\
+\shortintertext{Alors,}
+\esp{Y}		& = \esp{Y_1} - \esp{Y_2} \\
+			& = (1+r) \left( \esp{X \wedge \frac{u}{1+r}} - \esp{X \wedge \frac{d}{1+r}}  \right) \\
+\end{align*}
+\end{proof}
+
+\begin{align*}
+\esp{Y}	& = \int_{\frac{d}{1+r}}^{\frac{u}{1+r}} ((1+r) x - d) f_X(x) dx + \int_{\frac{u}{1+r}}^{\infty} (u-d) f_X(x) dx \\
+	& = (1+r) \left( \esp{X \wedge \frac{u}{1+r}} - \esp{X \wedge \frac{d}{1+r}}   \right) \\
+\end{align*}
+
+
+\section{Co-assurance}
+Soit $\alpha$ le pourcentage de co-assurance.
+
+\begin{align*}
+Y	& = 
+\begin{cases}
+0		& , X \leq d \\
+X - d	& , X > d \\
 \end{cases}
 \end{align*}
 
-\end{enumerate}
+\begin{align*}
+Y^C	& = 
+\begin{cases}
+0		& , X  \leq d \\
+\alpha(X - d) 	& , X > d \\
+\end{cases}
+\end{align*}
+Alors,
+\begin{equation}
+\esp{Y^C} = \alpha \esp{Y}
+\end{equation}
+
+
 
 
 
