@@ -121,34 +121,36 @@ Si à partir de M, $h(x)$ est décroissante $\Leftrightarrow$ $f(x)$ décroit tr
 
 
 \chapter{Types de contrats et primes}
-Section 8.1 à 8.5 dans le livre
+Dans cette section \footnote{Section 8.1 à 8.5 dans le livre}, on définit deux nouvelles variables
+\begin{definition}[\textit{Per-Loss} Variable]
+Soit $X$ le montant des dommages d'une réclamation. On peut définir $Y^L$ comme le montant payé par l'assureur lors de toute perte. Mathématiquement,
+\begin{equation}
+Y^L = g(X) \quad , Y^L \sim f_X(x)
+\end{equation}
+\end{definition}
 
-\paragraph{Rappels}
+\begin{definition}[\textit{Per-Payment} variable]
+Cette variable se définit plutôt comme le montant qui sera payé par l'assureur (i.e le montant de la perte, sachant qu'il y aura un paiement). Alors,
+\begin{equation}
+Y^P = g(X) \quad , Y^P \sim \frac{f_X(x)}{S_X(x)}
+\end{equation}
+$Y^P$ n'a donc pas de probabilité définie à $y=0$ (puisque ce n'est pas possible, sachant que $x$ est assez grand pour qu'il y ait un paiement.
+\end{definition}
 
-$d$ : montant du déductible
 
-$X \sim \frac{f(x)}{S(d)}$, $f(X | X > d)$
-
-\begin{align*}
-Y 	& = g(X) \quad ,X \sim f(x) \\
-Y^p	& = g(X)	 \quad ,X \sim \frac{f(x)}{S(d)} \\
-\end{align*}
-
-Il va avoir
 
 \section{Contrat avec limite}
 \label{sec:limite-sans-inflation}
 On analyse la fonction de perte d'un contrat avec une limite supérieure $u$. Alors, on définit $Y$ comme
 
-\begin{align*}
-Y	& = (X \wedge u) \\
-	& = \min(X, u) \\
- & = 
-\begin{cases}
+
+\begin{equation}
+Y	 = (X \wedge u) = \min(X, u) = \begin{cases}
 x	& , x \leq u \\
 u	& , x > u \\
-\end{cases} \\
-\end{align*}
+\end{cases}
+\end{equation}
+
 Aussi,
 \begin{align*}
 \esp{Y}	& = \esp{\min(X,u)} \\
@@ -194,23 +196,25 @@ u		&, x > \frac{u}{1+r} \\
 
 \section{Contrat avec déductible ordinaire}
 Soit un contrat avec perte $X$, où on paie 0 si $X \leq d$ et $X-d$ si $X > d$, où $d$ est le déductible ordinaire. Alors,
-\begin{align*}
-Y	& = (X-d)_+ \\
-Y	& = \max(X-d, 0) \\
-Y & = \begin{cases}
-0	& , X \leq d \\
-X - d	&, X > d \\
-\end{cases} \\
-\end{align*}
+
+\begin{equation}
+Y = (X-d)_+ = \max(X-d,0) = 
+\begin{cases}
+0		& , X \leq d \\
+X - d	& , X > d \\
+\end{cases}
+\end{equation}
+
+
 
 \subsection{Remarques}
 
 \begin{enumerate}[label=(\arabic*)]
 \item $X$ est une variable aléatoire continue
 
-\item mais $Y$ est une variable aléatoire mixte, car
+\item mais $Y^L$ est une variable aléatoire mixte, car
 \begin{align*}
-\prob{Y = y} & = 
+\prob{Y^L = y} & = 
 \begin{cases}
 F_X(d)	& ,y = 0 \\
 f_X(y+d)	& , y > 0 \\
@@ -218,14 +222,14 @@ f_X(y+d)	& , y > 0 \\
 \end{align*}
 
 
-\item La fonction de répartition de $Y$ est définie par
+\item La fonction de répartition de $Y^L$ est définie par
 \begin{align*}
 F_Y(y)	& = 
 \begin{cases}
 F_X(d)	& , y = 0 \\
 F_X(d) + \int_{0}^{y} f_X(u+d) du \\
 \cancel{F_X(d)} + F_X(y+d) \cancel{- F_X(d)} \\
-F_X(y_d)	& y > 0 \\
+F_X(y + d)	& y > 0 \\
 \end{cases}
 \end{align*}
 \item les fonctions de survie $S(y)$ et fonction de hasard $h(y)$ sont définies par
@@ -234,7 +238,7 @@ S_Y(y) 	& = 1 - F_Y(y) \\
 h(y)		& = \frac{f_Y(y)}{S_Y(y)} \\
 \end{align*}
 
-\item LA prime de ce contrat est appelée la prime \textit{stop-loss}, qui représente l'espérance de ce contrat.
+\item La prime de ce contrat est appelée la prime \textit{stop-loss}, qui représente l'espérance de ce contrat.
 \end{enumerate}
 
 \subsection{Prime Stop-Loss}
@@ -255,7 +259,7 @@ On peut définir la prime Stop-Loss comme
 \end{equation}
 \begin{proof}
 % Intégrer la preuve faite en dépannage le 20 septembre par Marianne avec les intégrales.
-On sait que (à compléter)
+À compléter
 \end{proof}
 \end{definition}
 
