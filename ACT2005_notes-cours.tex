@@ -460,6 +460,135 @@ Alors,
 \end{equation}
 
 
+\chapter{Estimation non-paramétrique}
+
+\paragraph{À savoir pour examen partiel}
+
+\begin{enumerate}[label=\faCheck]
+\item Loi normale
+\item Loi gamma
+\item Loi poisson
+\item Loi binomiale
+\item intégration par partie poru la loi exponentielle
+\item fonction densité, moyenne, variance et fgm
+\end{enumerate}
+
+\section{Terminologie}
+Pour $X_1, ..., X_n $ qui sont $iid$.
+
+On a
+\begin{align*}
+\esp{g(X)} & = \int g(x) d F(x) \\
+	& = \int g(x) f_X(x) dx \\
+	& = \int g(x) F_n(x) \\
+	& = \frac{1}{n} \sum_{i=1}^{n} g(x_i) \\
+\end{align*}
+... est un estimateur non-paramétrique
+
+\section{Estimation}
+
+\subsection{Données complètes}
+On cherche à estimer $F(t)$ ou $S(t)$, lorsque nos données sont complètes (i.e. $x_1, ..., x_n$ qui sont $iid$). Alors, l'estimateur non paramétrique pour $F(t)$ : 
+\begin{equation}
+F_n(t)	 = \frac{1}{n} \sum_{i=1}^{n} 1_{[x_i \leq t]}
+\end{equation}
+où $1_{[\cdot]}$ représente une fonction indicatrice.
+
+$F_x(t)$ aura donc la forme suivante : 
+\begin{equation}
+F_n(t) =
+\begin{cases}
+0				& , t < x_{(1)} \\
+\frac{1}{n}		& , x_{(1)} \leq t < x_{(2)} \\
+\frac{2}{n}		& , x_{(2)} \leq t < x_{(3)} \\
+...				& \\
+1				& , t \geq x_{(n)} \\
+\end{cases}
+\end{equation}
+où $t \in [0, x_{(n)}]$.
+
+\paragraph{Remarques}
+\begin{enumerate}[label=(\arabic*)]
+\item Lorsque $F_n(t) \to F(t)$, alors
+
+\item Puisqu'on a
+\begin{align*}
+\sum_{i=1}^{n} 1_{[x_i \leq t]} \sim Bin(n,\prob{X \leq t})
+\end{align*}
+Alors,
+\begin{align*}
+\esp{F_n(t)}		& = \frac{1}{n} n F(t) \\
+	& = F(t) \quad \text{(C'est un estimateur sans biais)} \\
+Var \left( F_n(t) \right) & = \frac{1}{n^2}  n F(t) S(t) \\
+	& = \frac{F(t) S(t)}{n}	\\
+	& \underset{n \to \infty}{=} 0 \\
+\end{align*}
+\end{enumerate}
+
+\subsection{Donnée groupées (Fonction OGIVE)}
+%% VOIR SECTION 11.3 dans le livre %%
+% Grahique de fonction de répartition empirique à insérer ici
+Dans certains contextes, on a $n$ données qui sont groupées en intervalle. La fonction OGIVE permet d'interpoler entre 2 points $x_i$ et $_{i+1}$.
+% Graphique des c^(i) et des intervalles n à insérer ici %%
+\begin{align*}
+c_{j-1} 	 \leq x  \leq c_j \\
+F_n(c_{j-1})	 \leq F_n(x)	 \leq F_n(c_j) \\
+\end{align*}
+
+
+La formule est
+\begin{equation}
+F_n^{\text{OGIVE}}(x) = \frac{c_j - x}{c_j - c_{j-1}} F_n(c_j -1) + \frac{x - c_{j-1}}{c_j - c_{j-1}} F_n(c_j)
+\end{equation}
+\paragraph{Remarques}
+\begin{enumerate}[label=(\arabic*)]
+\item Si $x = c_{j-1}$,
+\begin{align*}
+F_n(c_{j-1}) = F_n^{\text{OGIVE}}(c_{j-1}) \\
+\end{align*}
+\item Si $x = c_j$,
+\begin{align*}
+F_n(c_j) = F_n^{\text{OGIVE}}(c_j)
+\end{align*}
+\end{enumerate}
+
+\begin{exemple}[Exemple concret]
+L'assureur a groupé $n=10$ données en intervalles.
+\begin{center}
+\begin{tikzpicture}[x = 1cm]
+% Dessiner la ligne
+\draw[black, |->, thick]
+	(0,0) -- (5,0);
+			
+% Indiquer les intervalles
+\foreach \t in 	{0, 1, 2, 3, 4}
+{
+	\draw[thick]
+		(\t, 0) -- ++(0, 5pt)
+			node[above] {\t};
+} 	
+\end{tikzpicture}
+\end{center}
+Alors,
+\begin{align*}
+F_n(t)	& = \frac{1}{n} \sum_{i=1}^{n} I[x_i \leq t] \\
+F_n(1)	& = \frac{2}{10} \\
+F_n(2)	& = \frac{5}{10} \\
+F_n(3)	& = \frac{9}{10} \\
+F_n(4)	& = \frac{10}{10} \\
+		& = 1 \\
+\end{align*}
+% graphique à insérer avec les F_n ci-dessus %%
+
+\end{exemple}
+
+
+
+
+
+
+
+
 
 
 
