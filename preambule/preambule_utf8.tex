@@ -94,9 +94,14 @@ after title = {\large \hfill \faBook}
 \usepackage{actuarialsymbol}
 \usepackage{actuarialangle}
 
+% To indicate equation number on a specific line in align environment
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
 % Other shortcut
 \newcommand{\p}{\paragraph{}}
 \newcommand{\n}{\newline}
+\newcommand{\derivee}[1]{\frac{\partial}{\partial #1}}
+\newcommand{\indic}[1]{1_{\{ #1 \}}}
 
 % Special symbols package
 \usepackage[tikz]{bclogo}

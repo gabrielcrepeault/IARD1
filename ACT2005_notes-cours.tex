@@ -485,9 +485,7 @@ On a
 \end{align*}
 ... est un estimateur non-paramétrique
 
-\section{Estimation}
-
-\subsection{Données complètes}
+\section{Estimation de données complètes}
 On cherche à estimer $F(t)$ ou $S(t)$, lorsque nos données sont complètes (i.e. $x_1, ..., x_n$ qui sont $iid$). Alors, l'estimateur non paramétrique pour $F(t)$ : 
 \begin{equation}
 F_n(t)	 = \frac{1}{n} \sum_{i=1}^{n} 1_{[x_i \leq t]}
@@ -525,7 +523,10 @@ Var \left( F_n(t) \right) & = \frac{1}{n^2}  n F(t) S(t) \\
 \end{align*}
 \end{enumerate}
 
-\subsection{Donnée groupées (Fonction OGIVE)}
+\subsection{Estimation de donnée groupées (Fonction OGIVE)}
+\red{\textbf{CETTE MATIÈRE NE SERA PAS TESTÉE À L'EXAMEN}}
+
+
 %% VOIR SECTION 11.3 dans le livre %%
 % Grahique de fonction de répartition empirique à insérer ici
 Dans certains contextes, on a $n$ données qui sont groupées en intervalle. La fonction OGIVE permet d'interpoler entre 2 points $x_i$ et $_{i+1}$.
@@ -538,6 +539,7 @@ F_n(c_{j-1})	 \leq F_n(x)	 \leq F_n(c_j) \\
 
 La formule est
 \begin{equation}
+\label{eq:repart-OGIVE}
 F_n^{\text{OGIVE}}(x) = \frac{c_j - x}{c_j - c_{j-1}} F_n(c_j -1) + \frac{x - c_{j-1}}{c_j - c_{j-1}} F_n(c_j)
 \end{equation}
 \paragraph{Remarques}
@@ -579,9 +581,46 @@ F_n(4)	& = \frac{10}{10} \\
 		& = 1 \\
 \end{align*}
 % graphique à insérer avec les F_n ci-dessus %%
-
 \end{exemple}
 
+En dérivant \eqref{eq:repart-OGIVE}, on obtient
+\begin{align*}
+f_n(x) 	& = \derivee{x} F_x(x) \\
+		& = \frac{1}{c_j - c_{j-1}} F_x(c_j) - \frac{1}{c_j - c_{j-1}} F_n(c_{j-1}) \\
+		& = \frac{F_n(c_j) - F_n(c_{j-1})}{c_j - c_{j-1}} \\ \numberthis
+\end{align*}
+
+\section{Estimation de la fonction de survie}
+Soit $S_n(t)$ la fonction de survie empirique. Alors,
+\begin{align*}
+S_n(t) 	& = 1 - F_n(t) \\
+		& = \frac{n}{n} - \frac{1}{n} \sum_{i=1}^{n} \indic{x_i \leq t} \\ 
+		& = \frac{1}{n} \sum_{i=1}^{n} \left( 1 - \indic{x_i \leq t} \right) \\
+		& = \frac{1}{n} \sum_{i=1}^{n} \indic{x_i > t} \\
+\end{align*}
+
+\section{Estimateur  Kaplan-Meier}
+
+\section{l'approche conditionnelle pour estimer $S(t)$}
+% timeline à ajouter ici
+
+\begin{align*}
+S(t)		& = \frac{S(t_1)}{S(t_0)} \times \frac{S(t_2)}{S(t_1)} \times ... \times \frac{S(t)}{S(t_{i-1}} \\
+	& = \frac{S(t)}{\underbrace{S(t_0)}_{1}} \\
+	& = S(t) \\
+\end{align*}
+Alors,
+\begin{equation}
+S(t) = \prod_{j \leq t} \px{j}
+\end{equation}
+Ça nous suggère un autre estimateur pour $S(t)$ : 
+\begin{equation}
+\hat{S}(t) = \prod_{j \leq t} (1 - \hat{q}_j )
+\end{equation}
+Ceci est l'approche conditionnelle pour estimer $S(t)$. Et si jamais on a des données complètes, $S_n(t) = \hat{S}(t)$.
+\begin{proof}
+
+\end{proof}
 
 
 
