@@ -459,6 +459,17 @@ Alors,
 \esp{Y^C} = \alpha \esp{Y}
 \end{equation}
 
+\section{Cas général}
+Voici une formule générale, avec un déductible $d$, un taux d'inflation $r$, un pourcentage de coassurance de $\alpha$ et une limite de $u$ : 
+\begin{equation}
+Y^L = 
+\begin{cases}
+0		& ,\ x \leq \frac{d}{1+r} \\
+\alpha \Big( (1+r) x - d \Big)	& ,\ \frac{d}{1+r} \leq x \leq \frac{u}{1+r} \\
+\alpha (u-d)		& ,\ x > \frac{u}{1+r} \\
+\end{cases}
+\end{equation}
+
 
 \chapter{Estimation non-paramétrique}
 
@@ -618,9 +629,7 @@ S(t) = \prod_{j \leq t} \px{j}
 \hat{S}(t) = \prod_{j \leq t} (1 - \hat{q}_j )
 \end{equation}
 Ceci est l'approche conditionnelle pour estimer $S(t)$. Et si jamais on a des données complètes, $S_n(t) = \hat{S}(t)$.
-\begin{proof}
 
-\end{proof}
 
 
 
