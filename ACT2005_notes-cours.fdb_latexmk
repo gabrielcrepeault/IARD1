@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1538675013 "/Users/nicholaslangevin/Repertoire git/Note de cours IARD l/ACT2005_notes-cours.tex" "ACT2005_notes-cours.pdf" "ACT2005_notes-cours" 1538675015
-  "/Users/nicholaslangevin/Repertoire git/Note de cours IARD l/ACT2005_notes-cours.tex" 1538675012 19574 7e8937bf1e4e8f87db66af76973c51c9 ""
+["pdflatex"] 1538675182 "/Users/nicholaslangevin/Repertoire git/Note de cours IARD l/ACT2005_notes-cours.tex" "ACT2005_notes-cours.pdf" "ACT2005_notes-cours" 1538675184
+  "/Users/nicholaslangevin/Repertoire git/Note de cours IARD l/ACT2005_notes-cours.tex" 1538675123 19577 57ee9131a119ded2d86de7c97d355150 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/fontawesome/fontawesomethree.enc" 1480098667 2437 443c81fb50993bacedc5f9a206c322b0 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/fontawesome/fontawesometwo.enc" 1480098667 2679 32dd8ae231bf4a0752b98f62dc097183 ""
@@ -241,15 +241,15 @@
   "/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1495593472 2350277 a699055bee05bf8a40b0504752487295 ""
   "/usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt" 1495593487 4129592 0e6cfee100d68e6d96b92c0258f2ff73 ""
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
-  "ACT2005_notes-cours.aux" 1538675015 5164 e221d3348aec8a70d974bf8e6959a63d ""
-  "ACT2005_notes-cours.out" 1538675015 1774 b7242603d6928c2f40d79d88bffd8d2d ""
-  "ACT2005_notes-cours.tex" 1538675012 19574 7e8937bf1e4e8f87db66af76973c51c9 ""
-  "ACT2005_notes-cours.toc" 1538675015 2918 3fcd43cc3d96f7dcac8f87a217cc6305 ""
-  "Figures/Fct_repartition_empirique.png" 1538674304 60296 4af31d9f7a09d6648c802cfae353a046 ""
+  "ACT2005_notes-cours.aux" 1538675183 5164 e221d3348aec8a70d974bf8e6959a63d ""
+  "ACT2005_notes-cours.out" 1538675183 1774 b7242603d6928c2f40d79d88bffd8d2d ""
+  "ACT2005_notes-cours.tex" 1538675123 19577 57ee9131a119ded2d86de7c97d355150 ""
+  "ACT2005_notes-cours.toc" 1538675183 2918 3fcd43cc3d96f7dcac8f87a217cc6305 ""
+  "Figures/Fct_de_repartition_empirique.png" 1538675181 56305 a379a8dbe96468a5ae4b3b86d4bb9d49 ""
   "preambule/preambule_utf8.tex" 1538667207 3533 7ce4193259fc658f4843efc92737f2ca ""
   (generated)
-  "ACT2005_notes-cours.log"
   "ACT2005_notes-cours.toc"
   "ACT2005_notes-cours.out"
+  "ACT2005_notes-cours.log"
   "ACT2005_notes-cours.aux"
   "ACT2005_notes-cours.pdf"

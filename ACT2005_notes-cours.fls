@@ -492,9 +492,9 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/times/psyro.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/adobe/times/ptmri8t.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/fontawesome/FontAwesome--fontawesometwo.tfm
-INPUT Figures/Fct_repartition_empirique.png
-INPUT ./Figures/Fct_repartition_empirique.png
-INPUT ./Figures/Fct_repartition_empirique.png
+INPUT Figures/Fct_de_repartition_empirique.png
+INPUT ./Figures/Fct_de_repartition_empirique.png
+INPUT ./Figures/Fct_de_repartition_empirique.png
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/times/ptmrc8t.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/lm/t1lmtt.fd
