@@ -5,8 +5,6 @@
 % Lien vers un template de préambule
 \input{preambule/preambule_utf8.tex}
 % \input{preambule/code-listing_setup.tex}
-\usepackage{tikz}
-\usepackage{pgfplots}
 
 % Information sur le document
 \title{Mathématiques actuarielles IARD-1 \\
@@ -486,7 +484,6 @@ Y^L =
 \item fonction densité, moyenne, variance et fgm
 \end{enumerate}
 
-<<<<<<< Updated upstream
 \section{Terminologie}
 Pour $X_1, ..., X_n $ qui sont $iid$.
 
@@ -518,6 +515,11 @@ F_n(t) =
 \end{cases}
 \end{equation}
 où $t \in [0, x_{(n)}]$.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.4]{Figures/Fct_de_repartition_empirique.png}
+ \end{figure}
 
 \paragraph{Remarques}
 \begin{enumerate}[label=(\arabic*)]
@@ -634,34 +636,6 @@ S(t) = \prod_{j \leq t} \px{j}
 Ceci est l'approche conditionnelle pour estimer $S(t)$. Et si jamais on a des données complètes, $S_n(t) = \hat{S}(t)$.
 
 
-
-
-
-
-
-
-
-
-=======
-\begin{tikzpicture}
-    \begin{axis}[
-        title = {Fonction de répartition empirique},
-        legend entries={F(x) empirique,F(x)},
-        legend style={at={(0,1)},anchor=north west},
-        scale=2,
-        axis x line=bottom,
-        axis y line=left,
-        enlarge x limits=false,
-        enlarge y limits=false,
-        xtick={1,2,3,4,5},
-        ytick={1,2,3,4,5},
-        yticklabels={$1/n$,$2/n$,$\vdots$,$1$},
-        xticklabels={$I_{1}$,$I_{2}$,$\cdot\cdot\cdot$,$I_{n}$}]
-        \addplot coordinates { (0,0) (1,0) (1,1) (2,1) (2,2) (3,2) (3,3) (4,3) (4,4) (5,4) };
-        \addplot+[mark=none,smooth] coordinates { (0,0) (0.5,0.1) (0.7,0.2) (1,0.5) (1.5,1) (2,1.5) (2.5,2) (3,2.5) (3.5,3) (4,3.5) (4.5,4) (5,4) };
-    \end{axis}
-\end{tikzpicture}
->>>>>>> Stashed changes
 
 
 \end{document}
