@@ -59,10 +59,15 @@ Le 3\up{e} moment centré, qui est utilisé pour calculer le coefficient d'asym�
 
 \paragraph{Coefficient d'asymétrie}
 Le coefficient d'asymétrie, aussi appelé \textit{skewness}, est représentée par
+% J'ai pris la notation du livre Loss Model pour le skewness.
 \begin{equation}
-S_k = \frac{\mu_3}{\sigma^2}
+\gamma_1 = \frac{\mu_3}{\sigma^3}
 \end{equation}
-Soit le 3\up{e} moment standarisé. Si $S_k = 0$, alors la distribution tend vers une loi normale.
+Soit le 3\up{e} moment standarisé. Si $S_k = 0$, alors la distribution tend vers une loi normale, telle qu'on le voit sur la figure ci-dessous : 
+
+\begin{center}
+\includegraphics[scale=0.4]{Figures/skewness_interpretation.jpg}
+\end{center}
 
 \paragraph{Coefficient d'applatissement}
 Le coefficient d'applatissement, aussi appelé \textit{Kurtosis}, se définit par
@@ -516,13 +521,6 @@ F_n(t) =
 \end{equation}
 où $t \in [0, x_{(n)}]$.
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.4]{Figures/Fct_de_repartition_empirique.png}
-	\caption{Fonction de répartition empirique}
- \end{figure}
- \footnotemark{\url{https://pmb.univ-saida.dz/buscopac/doc_num.php?explnum_id=142}}
-
 \paragraph{Remarques}
 \begin{enumerate}[label=(\arabic*)]
 \item Lorsque $F_n(t) \to F(t)$, alors
@@ -654,6 +652,14 @@ où $r_i$ est le nombre de survivant au temps $i$.
 \begin{exemple}
 Exemple fait en classe au début du cours, ligne du temps à insérer ici.
 \end{exemple}
+
+
+
+
+
+
+
+
 
 
 
