@@ -631,6 +631,23 @@ S(t) = \prod_{j \leq t} \px{j}
 Ceci est l'approche conditionnelle pour estimer $S(t)$. Et si jamais on a des données complètes, $S_n(t) = \hat{S}(t)$.
 
 
+\subsection{Vu en classe 5 oct.}
+\begin{align*}
+\hat{S}(t) & = \prod_{i \leq t} \left(1 - \frac{s_i}{r_i} \right) \\
+S(t) 	& = e^{- H(t)} \\
+\end{align*}
+ET
+\begin{align*}
+\hat{H}(t)	& = - \ln (\hat{S}(t)) \\
+	& = \sum_{i \leq t} - \ln \left( 1 - \frac{s_i}{r_i} \right) \\
+\hat{H}_{N-A}(t) 	& \sum_{i \leq t} \frac{s_i}{r_i} \\
+\end{align*}
+où $r_i$ est le nombre de survivant au temps $i$.
+
+\begin{exemple}
+Exemple fait en classe au début du cours, ligne du temps à insérer ici.
+\end{exemple}
+
 
 
 
