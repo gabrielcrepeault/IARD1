@@ -500,38 +500,18 @@ Y^L =
 
 
 
-
-\chapter{Estimation non-paramétrique}
-
-\paragraph{À savoir pour examen partiel}
-
-\begin{enumerate}[label=\faCheck]
-\item Loi normale
-\item Loi gamma
-\item Loi poisson
-\item Loi binomiale
-\item intégration par partie poru la loi exponentielle
-\item fonction densité, moyenne, variance et fgm
-\end{enumerate}
-
-\section{Terminologie}
-Pour $X_1, ..., X_n $ qui sont $iid$.
-
-On a
-\begin{align*}
-\esp{g(X)} & = \int g(x) d F(x) \\
-	& = \int g(x) f_X(x) dx \\
-	& = \int g(x) F_n(x) \\
-	& = \frac{1}{n} \sum_{i=1}^{n} g(x_i) \\
-\end{align*}
-... est un estimateur non-paramétrique
+\setcounter{chapter}{10}
+\chapter{Estimation de données complètes}
+\setcounter{section}{1}
+% Commence à la section 11.2
 
 \section{Estimation de données complètes}
+\subsection{Estimation de la fonction de répartition empirique}
 On cherche à estimer $F(t)$ ou $S(t)$, lorsque nos données sont complètes (i.e. $x_1, ..., x_n$ qui sont $iid$). Alors, l'estimateur non paramétrique pour $F(t)$ : 
 \begin{equation}
-F_n(t)	 = \frac{1}{n} \sum_{i=1}^{n} 1_{[x_i \leq t]}
+F_n(t)	 = \frac{1}{n} \sum_{i=1}^{n} \indic{x_i \leq t}
 \end{equation}
-où $1_{[\cdot]}$ représente une fonction indicatrice.
+où $\indic{.}$ représente une fonction indicatrice.
 
 $F_x(t)$ aura donc la forme suivante : 
 \begin{equation}
@@ -545,6 +525,11 @@ F_n(t) =
 \end{cases}
 \end{equation}
 où $t \in [0, x_{(n)}]$.
+
+\begin{center}
+\includegraphics[scale=0.3]{Figures/Fct_de_repartition_empirique}
+\end{center}
+
 
 \paragraph{Remarques}
 \begin{enumerate}[label=(\arabic*)]
@@ -564,25 +549,76 @@ Var \left( F_n(t) \right) & = \frac{1}{n^2}  n F(t) S(t) \\
 \end{align*}
 \end{enumerate}
 
-\subsection{Estimation de donnée groupées (Fonction OGIVE)}
-\red{\textbf{CETTE MATIÈRE NE SERA PAS TESTÉE À L'EXAMEN}}
+\subsection{\textit{Cumulative hazard-rate function}}
+On utilise cette fonctoin pour pouvoir réussir à estimer la fonction de densité et le \textit{hazard rate} empirique. En effet, puisque la distribution empirique est discrète, on ne peut pas dériver $F_n(x)$ pour obtenir $f_n(x)$ et $h_n(x)$. La fonction de hazard cumulative se définit par
+\begin{equation}
+H_X(x) = - \ln S_X(x)
+\end{equation}
+
+\subsection{Notation à utiliser pour la distribution empirique}
+\begin{enumerate}[label=\faAngleRight]
+\item \blue{$y_1 < y_2 < ... < y_k$} : les $k$ valeurs uniques qui apparaissent dans l'échantillon de $n$. \textbf{Note : } $k \leq n$.
+
+\item \blue{$s_j$} : nombre de fois que l'observation $y_j$ est observée dans l'échantillon. On a
+\begin{align*}
+\sum_{j=1}^{k} s_j = 1
+\end{align*}
+
+\item \blue{$r_j$} : nombre d'observations qui sont plus grandes ou égales à $y_j$. On a
+\begin{align*}
+r_j = \sum_{i=j}^{k} s_i
+\end{align*}
+
+\item Avec cette nouvelle notation, on peut ré-écrire la fonction de répartition empirique : 
+\begin{equation}
+F_n(x) = 
+\begin{cases}
+0						& , x < y \\
+1 - \frac{r_j}{n}		& , y_{j-1} \leq x \leq y_j \quad j = 2, ..., k \\
+1						& , x \geq y_k \\
+\end{cases}
+\end{equation}
+\end{enumerate}
+
+\subsection{Estimateur de Nelson \r{A}alen}
+\label{subsec:nelson-Aalen}
+Pour pouvoir estimer la \textit{Cumulative hazard-rate function}, on doit utiliser un estimateur qui se base sur la notation utilisée à la sous-section précédente, soit le \textit{Nelson \r{A}alen estimate} : 
+\begin{equation}
+\hat{H}(x) = 
+\begin{cases}
+0		& , x < y_1 \\
+\sum_{i=1}^{j-1} \frac{s_i}{r_i}	& , y_{j-1} \leq x \leq y_j \quad j = 2, ..., k \\
+\sum_{i=1}^{k} \frac{s_i}{r_i}		& , x \geq y_k \\
+\end{cases}
+\end{equation}
+
+\section{Distribution empirique avec données groupées}
+
+\subsection{Fonction OGIVE}
+\red{\textbf{CETTE MATIÈRE NE SERA PAS TESTÉE À L'EXAMEN intra A2018}}
 
 
 %% VOIR SECTION 11.3 dans le livre %%
 % Grahique de fonction de répartition empirique à insérer ici
-Dans certains contextes, on a $n$ données qui sont groupées en intervalle. La fonction OGIVE permet d'interpoler entre 2 points $x_i$ et $_{i+1}$.
+Dans certains contextes, on a $n$ données qui sont groupées en intervalles. La fonction OGIVE permet d'interpoler entre 2 points $c_{j-1}$ et $c_{j}$.
 % Graphique des c^(i) et des intervalles n à insérer ici %%
 \begin{align*}
 c_{j-1} 	 \leq x  \leq c_j \\
 F_n(c_{j-1})	 \leq F_n(x)	 \leq F_n(c_j) \\
 \end{align*}
+On peut déterminer la valeur empirique de $F_n(x)$ aux bornes des classes, avec
+\begin{align*}
+F_n(x) = \frac{\sum_{i=1}^{j} n_i}{n}
+\end{align*}
+où $n_i$ est le nombre d'observations qui sont entre $c_{j-1}$ et $c_j$. Toutefois, pour les valeurs entre deux bornes $c_0 < c_1 < ... < c_k$, il faut approximer avec la fonction OGIV ci-dessous : 
 
-
-La formule est
 \begin{equation}
 \label{eq:repart-OGIVE}
 F_n^{\text{OGIVE}}(x) = \frac{c_j - x}{c_j - c_{j-1}} F_n(c_j -1) + \frac{x - c_{j-1}}{c_j - c_{j-1}} F_n(c_j)
 \end{equation}
+
+
+
 \paragraph{Remarques}
 \begin{enumerate}[label=(\arabic*)]
 \item Si $x = c_{j-1}$,
@@ -593,90 +629,72 @@ F_n(c_{j-1}) = F_n^{\text{OGIVE}}(c_{j-1}) \\
 \begin{align*}
 F_n(c_j) = F_n^{\text{OGIVE}}(c_j)
 \end{align*}
-\end{enumerate}
 
-\begin{exemple}[Exemple concret]
-L'assureur a groupé $n=10$ données en intervalles.
-\begin{center}
-\begin{tikzpicture}[x = 1cm]
-% Dessiner la ligne
-\draw[black, |->, thick]
-	(0,0) -- (5,0);
-			
-% Indiquer les intervalles
-\foreach \t in 	{0, 1, 2, 3, 4}
-{
-	\draw[thick]
-		(\t, 0) -- ++(0, 5pt)
-			node[above] {\t};
-} 	
-\end{tikzpicture}
-\end{center}
-Alors,
-\begin{align*}
-F_n(t)	& = \frac{1}{n} \sum_{i=1}^{n} I[x_i \leq t] \\
-F_n(1)	& = \frac{2}{10} \\
-F_n(2)	& = \frac{5}{10} \\
-F_n(3)	& = \frac{9}{10} \\
-F_n(4)	& = \frac{10}{10} \\
-		& = 1 \\
-\end{align*}
-% graphique à insérer avec les F_n ci-dessus %%
-\end{exemple}
-
-En dérivant \eqref{eq:repart-OGIVE}, on obtient
+\item En dérivant \eqref{eq:repart-OGIVE}, on obtient
 \begin{align*}
 f_n(x) 	& = \derivee{x} F_x(x) \\
 		& = \frac{1}{c_j - c_{j-1}} F_x(c_j) - \frac{1}{c_j - c_{j-1}} F_n(c_{j-1}) \\
 		& = \frac{F_n(c_j) - F_n(c_{j-1})}{c_j - c_{j-1}} \\ \numberthis
 \end{align*}
+\end{enumerate}
 
-\section{Estimation de la fonction de survie}
-Soit $S_n(t)$ la fonction de survie empirique. Alors,
+\chapter{Estimation de données modifiées}
+\section{Point estimation}
+\subsection{Définitions importante}
+Un vocabulaire spécifique aux données modifiées est utilisé, soit
+
+\begin{tabular}{|>{\bfseries} l |>{\em}l |p{3cm}|}
+\hline
+Définition	& Terme anglais & Explication \\
+\hline	\hline
+Tronquée à gauche	& left truncated at $d$ & si la valeur observée est plus basse dque $d$, elle n'est pas enregistrée \\
+Tronquée à droite	& right truncated at $u$ & si la valeur observée est plus grande que $u$, elle n'est pas enregistrée \\
+Censurée à gauche & left censured at $d$ & si la valeur observée est plus basse que $d$, on indique $d$ dans les données modifiées \\
+Censurée à droite & right censored at $u$ & si la valeur observée est plus grande que $u$, on indique $u$ dans les données modifiées \\
+\hline
+\end{tabular}
+
+\textbf{Note} : Il arrive aussi que les données soient \emph{shifted at $d$}, ce qui veut dire qu'on soustrait $d$ aux données (souvent en présence d'un déductible). 
+
+\subsubsection{Notation}
+\begin{enumerate}[label=\faAngleRight]
+\item \blue{$y_1 < y_2 < ... < y_k$} : les $k$ valeurs uniques qui apparaissent dans l'échantillon.
+
+\item \blue{$x_j$} : la $j$\up{e} données non-censurée qui apparait dans l'échantillon
+
+\item \blue{$d_j$} : le montant auquel $x_j$ est tronquée. Si il n'y a pas de troncage, alors $d_j = 0$.
+
+\item \blue{$u_j$} : la $j$ \up{e} données censurée qui apparait dans l'échantillon.
+
+\item \blue{$r_j$} : nombre d'observations qui sont plus grandes ou égales à $y_j$ (\emph{risk set})
 \begin{align*}
-S_n(t) 	& = 1 - F_n(t) \\
-		& = \frac{n}{n} - \frac{1}{n} \sum_{i=1}^{n} \indic{x_i \leq t} \\ 
-		& = \frac{1}{n} \sum_{i=1}^{n} \left( 1 - \indic{x_i \leq t} \right) \\
-		& = \frac{1}{n} \sum_{i=1}^{n} \indic{x_i > t} \\
+r_j = \text{\# of $x_i$} + \text{\# of $u_i$} - (\text{\# of $d_i$} \geq y_j)
 \end{align*}
 
-\section{Estimateur  Kaplan-Meier}
+\item \blue{$s_i$} : nombre de décès au temps $i$.
+\end{enumerate}
 
-\section{l'approche conditionnelle pour estimer $S(t)$}
-% timeline à ajouter ici
-
-\begin{align*}
-S(t)		& = \frac{S(t_1)}{S(t_0)} \times \frac{S(t_2)}{S(t_1)} \times ... \times \frac{S(t)}{S(t_{i-1}} \\
-	& = \frac{S(t)}{\underbrace{S(t_0)}_{1}} \\
-	& = S(t) \\
-\end{align*}
-Alors,
+\subsubsection{Estimateur de Kaplan-Meier}
+Cet estimateur est une version modifiée de l'estimateur de Nelson-\r{A}alen vu à la section \ref{subsec:nelson-Aalen}. Avec l'information des données et en utilisant la notation vue à la sous-section précédente, on peut estimer la fonction de survie empirique : 
 \begin{equation}
-S(t) = \prod_{j \leq t} \px{j}
+\hat{S}_n(t) =
+\begin{cases}
+1		& , 0 \leq t < y_1 \\
+\prod_{i=1}^{j-1} \left( \frac{r_i - s_i}{r_i} \right) & , y_{j-1} \leq t < y_j \quad j = 2, ..., k \\
+\prod_{i=1}^{k} \left( \frac{r_i - s_i}{r_i}  \right) & t \geq y_k \\
+\end{cases}
 \end{equation}
-Ça nous suggère un autre estimateur pour $S(t)$ : 
-\begin{equation}
-\hat{S}(t) = \prod_{j \leq t} (1 - \hat{q}_j )
-\end{equation}
-Ceci est l'approche conditionnelle pour estimer $S(t)$. Et si jamais on a des données complètes, $S_n(t) = \hat{S}(t)$.
 
 
-\subsection{Vu en classe 5 oct.}
-\begin{align*}
-\hat{S}(t) & = \prod_{i \leq t} \left(1 - \frac{s_i}{r_i} \right) \\
-S(t) 	& = e^{- H(t)} \\
-\end{align*}
-ET
-\begin{align*}
-\hat{H}(t)	& = - \ln (\hat{S}(t)) \\
-	& = \sum_{i \leq t} - \ln \left( 1 - \frac{s_i}{r_i} \right) \\
-\hat{H}_{N-A}(t) 	& \sum_{i \leq t} \frac{s_i}{r_i} \\
-\end{align*}
-où $r_i$ est le nombre de survivant au temps $i$.
+\section{Espérance, Variance et et intervalle d'estimation}
 
-\begin{exemple}
-Exemple fait en classe au début du cours, ligne du temps à insérer ici.
-\end{exemple}
+\subsubsection{Contexte}
+On s'intéresse à l'espérance et la variance de la fonction de survie $S_n$, qui suite une binomiale (i.e. $S_n(x) \sim Bin(n, S(x))$. Si on connaissait $S(x)$, on pourrait facilement déduire l'espérance et la variance avec les formules qu'on connaît. Toutefois, puisqu'on cherche souvent à estimer $S(x)$, il faudra aussi estimer l'espérance et la variance.
+
+\hl{Section à compléter}
+
+
+
 
 
 
