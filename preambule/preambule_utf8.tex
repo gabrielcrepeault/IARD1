@@ -1,12 +1,14 @@
 % !TEX encoding = UTF-8 Unicode
 % LaTeX Preamble
 % Author : Gabriel Crépeault-Cauchon
+% Last update : 07/10/2018
 
 % HOW-TO : copy-paste this file in the same directory as your .tex file, and add in your preamble the next command right after you have specified your documentclass : 
 % \input{preambule_utf8.tex}
+
 % ---------------------------------------------
+% BEGINNING OF PREAMBLE
 % ---------------------------------------------
-%% BEGINNING OF PREAMBLE
 % Encoding packages
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -29,6 +31,7 @@
 \usepackage{amsmath,amsthm,amssymb,latexsym,amsfonts}
 \usepackage{empheq}
 \usepackage{numprint}
+\usepackage{dsfont} 
 
 
 % Tcolorbox config
@@ -101,7 +104,7 @@ after title = {\large \hfill \faBook}
 \newcommand{\p}{\paragraph{}}
 \newcommand{\n}{\newline}
 \newcommand{\derivee}[1]{\frac{\partial}{\partial #1}}
-\newcommand{\indic}[1]{1_{\{ #1 \}}}
+\newcommand{\indic}[1]{\mathds{1}_{\{ #1 \}}}
 
 % Special symbols package
 \usepackage[tikz]{bclogo}
@@ -110,8 +113,6 @@ after title = {\large \hfill \faBook}
 % Retire l'indentation automatique de Latex
 \setlength{\parindent}{0pt}
 
-
-
-%% END OF PREAMBLE
 % ---------------------------------------------
+% END OF PREAMBLE
 % ---------------------------------------------

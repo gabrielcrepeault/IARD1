@@ -32,8 +32,10 @@ Ce document résume les notes de cours prises en classe dans le cours de Mathém
 \end{abstract}
 % --------------
 
-\chapter{Rappel sur les notions de probabilité et statistiques}
-\section{Quantités à savoir}
+
+\setcounter{chapter}{2} % Pour aller directement au chapitre 3
+\chapter{Quantités des distributions à connaître}
+\section{Moments}
 
 \paragraph{\textit{Raw moments}}
 On représente le $k$\up{e} moment par $\mu_k^\prime$, soit
@@ -57,12 +59,23 @@ Le 3\up{e} moment centré, qui est utilisé pour calculer le coefficient d'asym�
 \end{align*}
 \end{exemple}
 
-\paragraph{Coefficient d'asymétrie}
-Le coefficient d'asymétrie, aussi appelé \textit{skewness}, est représentée par
+\paragraph{Coefficient de variation}
 \begin{equation}
-S_k = \frac{\mu_3}{\sigma^2}
+CV = \frac{\sigma}{\esp{X}}
 \end{equation}
-Soit le 3\up{e} moment standarisé. Si $S_k = 0$, alors la distribution tend vers une loi normale.
+
+
+\paragraph{Coefficient d'asymétrie}
+Le coefficient d'asymétrie, aussi appelé \textit{skewness}, est défini par
+% J'ai pris la notation du livre Loss Model pour le skewness.
+\begin{equation}
+\gamma_1 = \frac{\mu_3}{\sigma^3}
+\end{equation}
+Soit le 3\up{e} moment standarisé. Si $S_k = 0$, alors la distribution tend vers une loi normale, telle qu'on le voit sur la figure ci-dessous : 
+
+\begin{center}
+\includegraphics[scale=0.4]{Figures/skewness_interpretation.jpg}
+\end{center}
 
 \paragraph{Coefficient d'applatissement}
 Le coefficient d'applatissement, aussi appelé \textit{Kurtosis}, se définit par
@@ -71,21 +84,71 @@ Le coefficient d'applatissement, aussi appelé \textit{Kurtosis}, se définit pa
 \end{equation}
 Cette quantité permet de mesurer l'épaisseur de l'aile (\textit{tail}) de la distribution. Si $\esp{z^4} =3$, alors la distribution tend vers une loi normale $N(\mu, \sigma^2)$.
 
-\section{La loi normale}
-
-\paragraph{La fonction génératrice des moments}
-\begin{align*}
-    M_x(t) &= M_x(0) + \frac{M_x^\prime t}{1!} + \frac{M_x^{\prime\prime} t^2}{2!} + ... + \frac{M_x^{(n) t^n}}{n!} \\
-           &= 1 + \frac{E[x] t}{1!} + \frac{E[x^2] t^2}{2!} + ... + \frac{E[x^n] t^n}{n!}
-\end{align*}
-
-On pose: $c_k = \frac{E[x^n]}{n!}$ alors,
-
+\paragraph{Mean Excess Loss}
+On définit la variable aléatoire $Y^P$, qui représente le montant de perte en excès d'un déductible $d$, sachant que la perte est au delà de ce montant. On peut définir l'espérance des coûts de cette variable alétaoire : 
 \begin{equation}
-    E[x^k] = C_k k!
+e(d) = \esp{Y^P} = \esp{X-d | X \geq d} = \frac{\int_{d}^{\infty} S_X(x)}{S_X(d)}
 \end{equation}
 
+Note : cette variable est dite tronquée à gauche et \textit{shifted}. On entend parfois aussi \textit{Per-payment}
+	
+
+\paragraph{Left censored and shifted variable}
+Soit la v.a. $Y^L$, qui représente le montant payé par l'assureur \textit{par perte}. La variable est donc dite \textit{censurée à gauche et shifted}. On peut aussi en calculer l'espérance : 
+\begin{equation}
+\esp{Y^L} = \esp{(X-d)_+} = \int_{d}^{\infty} (x-d) f_X(x) dx
+\end{equation}
+De plus, on peut facilement déduire la relation suivante : 
+\begin{align*}
+\esp{(X-d)_+} = e(d) (1 - F_X(d))
+\end{align*}
+
+\paragraph{Limited Loss Variable} Finalement, on peut définir la variable $Y$, qui représente le paiement de l'assureur avec une limite de $u$ à la police. Son espérance est définie par
+\begin{equation}
+\esp{X \wedge u} = \int_{0}^{u} f_X(x) dx
+\end{equation}
+À l'aide d'intégration par partie, on peut trouver la forme suivante : 
+\begin{align*}
+\esp{X \wedge u} = \int_{0}^{u} S_X(x) dx
+\end{align*}
+La v.a. $Y$ est dite \textit{censurée à droite et shifted}
+
+\begin{exemple}[lien entre le déductible et la limite]
+On peut faire le lien entre le déductible et la limite : 
+\begin{center}
+\includegraphics[scale=0.45]{Figures/distinction_loss-deductible-limit}
+\end{center}
+\end{exemple}
+
+\setcounter{section}{3}
+% Ne semble pas pertinent pour l'Examen ...
+%\section{La loi normale}
+%
+%\paragraph{La fonction génératrice des moments}
+%\begin{align*}
+%    M_x(t) &= M_x(0) + \frac{M_x^\prime t}{1!} + \frac{M_x^{\prime\prime} t^2}{2!} + ... + \frac{M_x^{(n) t^n}}{n!} \\
+%           &= 1 + \frac{E[x] t}{1!} + \frac{E[x^2] t^2}{2!} + ... + \frac{E[x^n] t^n}{n!}
+%\end{align*}
+%
+%On pose: $c_k = \frac{E[x^n]}{n!}$ alors,
+%
+%\begin{equation}
+%    E[x^k] = C_k k!
+%\end{equation}
+
 \section{Queue de distribution}
+\subsection{Classification selon les moments}
+\begin{enumerate}[label=\faAngleRight]
+\item On peut déterminer si une distribution a une \textit{heavy-tail} en vérifiant si ses moments existent.
+
+\item On peut aussi comparer des distributions entre-eux en utilisant des quantités standarisées, telles que le Coefficient de variation, le coefficient d'asymétrie (\textit{skewness}) ou encore le coefficient d'applatissement (\textit{Kurtosis})
+\end{enumerate}
+
+\subsection{Classification selon les comportements limites des ailes de distribution}
+\begin{enumerate}[label=\faAngleRight]
+\item On peut faire le ratio de deux distributions avec leurs fonction de survie ($S(x)$) ou leur fonction $f$ de densité pour vérifier laquelle des 2 a la plus grosse aile de distribution (\textit{tail}).
+
+\end{enumerate}
 
 \begin{enumerate}
     \item Sois $f_1(x)$ une fonction tels que les 3 premiers moment existe: $E[x^4] = \infty$
@@ -111,138 +174,95 @@ Alors,
     La pareto a une queue plus lourde que la gamma
 \end{exemple}
 
-\paragraph{La fonction de hasard}
+
+\subsection{Classification basée sur la fonction de Hazard}
+
+\begin{definition}[\textit{Hazard rate function}]
+La fonction de hazard (aussi appelée force de mortalité ($\mu(x)$) ou le failure rate ($\lambda(x)$), est définie par
 \begin{equation}
-    h(x) = \frac{f(x)}{s(x)}
+h_X(x) = \frac{f_X(x)}{S_X(x)}
 \end{equation}
-Si à partir de M, $h(x)$ est décroissante $\Leftrightarrow$ $f(x)$ décroit trop lentement, alors $f(x)$ à une aile lourde. 
-
-
-
-
-\chapter{Types de contrats et primes}
-Dans cette section \footnote{Section 8.1 à 8.5 dans le livre}, on définit deux nouvelles variables
-\begin{definition}[\textit{Per-Loss} Variable]
-Soit $X$ le montant des dommages d'une réclamation. On peut définir $Y^L$ comme le montant payé par l'assureur lors de toute perte. Mathématiquement,
-\begin{equation}
-Y^L = g(X) \quad , Y^L \sim f_X(x)
-\end{equation}
-\end{definition}
-
-\begin{definition}[\textit{Per-Payment} variable]
-Cette variable se définit plutôt comme le montant qui sera payé par l'assureur (i.e le montant de la perte, sachant qu'il y aura un paiement). Alors,
-\begin{equation}
-Y^P = g(X) \quad , Y^P \sim \frac{f_X(x)}{S_X(x)}
-\end{equation}
-$Y^P$ n'a donc pas de probabilité définie à $y=0$ (puisque ce n'est pas possible, sachant que $x$ est assez grand pour qu'il y ait un paiement.
-\end{definition}
-
-
-
-\section{Contrat avec limite}
-\label{sec:limite-sans-inflation}
-On analyse la fonction de perte d'un contrat avec une limite supérieure $u$. Alors, on définit $Y$ comme
-
-
-\begin{equation}
-Y	 = (X \wedge u) = \min(X, u) = \begin{cases}
-x	& , x \leq u \\
-u	& , x > u \\
-\end{cases}
-\end{equation}
-
-Aussi,
+On peut aussi exprimer la fonction $h_X(x)$ comme
 \begin{align*}
-\esp{Y}	& = \esp{\min(X,u)} \\
-	& = \int_{0}^{u} x f_X(x) dx + u \int_{u}^{\infty} f_X(x) dx \\
-	& = \int_{0}^{u} x f_X(x) dx + u S(u) \\
+h_X(x) = - \ln (S_X(x))
 \end{align*}
-
-
-
-\subsection{Cas avec inflation}
-On a vu le contrat avec perte limitée, mais sans parler d'inflation. Supposons qu'on a le scénario \underline{avec inflation}, où $X' = (1+r)X$ et $r$ représente le taux d'inflation appliqué au montant de perte. Alors, il faut ajuster $u$ pour tenir compte de l'inflation.
-
-\begin{align*}
-Y & = 
-\begin{cases}
-(1+r) X	&, (1+r)X \leq u \\
-u		&, (1+r) X > u \\
-\end{cases} \\
-	& = 
-\begin{cases}
-(1+r)X	&, x \leq \frac{u}{1+r} \\
-u		&, x > \frac{u}{1+r} \\
-\end{cases} \\
-\end{align*}
-\begin{definition}[Prime Limited Loss sous l'inflation]
-\begin{equation}
-\esp{X' \wedge u} = (1+r) \esp{X  \wedge \frac{u}{1+r}} 
-\end{equation}
 \end{definition}
-
-\begin{proof}
-\begin{align*}
-\esp{Y}	& = \int_{0}^{\frac{u}{1+r}} (1+r) x f_X(x) dx  + u \int_{\frac{u}{1+r}}^{\infty} f_X(x) dx \\
-	& = (1+r) \int_{0}^{\frac{d}{1+r}} f f_X(x) dx + s S_X \left( \frac{u}{1+r} \right) \\
-	& = (1+r) \left( \int_{0}^{\frac{u}{1+r}} x f_X(x) dx  + \frac{u}{1+r} S_X \left( \frac{u}{1+r} \right)    \right)	 \\
-	& = (1+r) \esp{X  \wedge \frac{u}{1+r}}  \\
-\end{align*}
-\end{proof}
+Soit une distribution ayant fonction de densité $f_X(x)$ et fonction de hazard $h_X(x)$. Alors,
+\begin{enumerate}[label=\faAngleRight]
+\item Si $h(x) \ \nearrow$, \textit{light-tailed}
+\item Si $h(x) \ \searrow$, \textit{heavy-tailed}
+\item Note : on peut aussi comparer les distributions entre-elles : si une distribution voit son $h_1(x)$ augmenter plus rapidement que l'autre (i.e. $h_2(x)$), alors la deuxième distribution a une aile de distribution plus lourde.
+\end{enumerate}
 
 
 
 
 
-\section{Contrat avec déductible ordinaire}
-Soit un contrat avec perte $X$, où on paie 0 si $X \leq d$ et $X-d$ si $X > d$, où $d$ est le déductible ordinaire. Alors,
-
+\setcounter{chapter}{7}
+\chapter{Fréquence et sévérité avec modifications aux contrats}
+\setcounter{section}{1}
+\section{Déductibles}
+\subsection{Ordinary deductible}
+\subsubsection{Définition}
+Soit un contrat d'assurance avec déductible $d$. Lors d'une perte, l'assureur va payer tout montant en excédent du montant $d$. Alors, pour la variable \textit{per-payment},
 \begin{equation}
-Y = (X-d)_+ = \max(X-d,0) = 
+Y^L = (X-d)_+ = 
 \begin{cases}
 0		& , X \leq d \\
 X - d	& , X > d \\
 \end{cases}
 \end{equation}
 
-
-
-\subsection{Remarques}
-
-\begin{enumerate}[label=(\arabic*)]
-\item $X$ est une variable aléatoire continue
-
-\item mais $Y^L$ est une variable aléatoire mixte, car
-\begin{align*}
-\prob{Y^L = y} & = 
+\begin{equation}
+Y^P = (X-d)_+ = 
 \begin{cases}
-F_X(d)	& ,y = 0 \\
-f_X(y+d)	& , y > 0 \\
+\text{Non-défini}		& , X \leq d \\
+X - d	& , X > d \\
 \end{cases}
-\end{align*}
+\end{equation}
 
+\subsubsection{Fonctions reliées}
 
-\item La fonction de répartition de $Y^L$ est définie par
+Et on peut aussi déduire toutes les fonctions qui y sont reliées : 
 \begin{align*}
-F_Y(y)	& = 
-\begin{cases}
-F_X(d)	& , y = 0 \\
-F_X(d) + \int_{0}^{y} f_X(u+d) du \\
-\cancel{F_X(d)} + F_X(y+d) \cancel{- F_X(d)} \\
-F_X(y + d)	& y > 0 \\
-\end{cases}
+f_{Y^P}(y) = \frac{f_X(y+d)}{S_X(d)}
 \end{align*}
-\item les fonctions de survie $S(y)$ et fonction de hasard $h(y)$ sont définies par
+
 \begin{align*}
-S_Y(y) 	& = 1 - F_Y(y) \\
-h(y)		& = \frac{f_Y(y)}{S_Y(y)} \\
+S_{Y^P}(y) = \frac{S_X(y+d)}{S_X(d)}
 \end{align*}
 
-\item La prime de ce contrat est appelée la prime \textit{stop-loss}, qui représente l'espérance de ce contrat.
-\end{enumerate}
+\begin{align*}
+F_{Y^P}(y) = \frac{F_X(y+d) - F_X(d)}{S_X(d)}
+\end{align*}
 
-\subsection{Prime Stop-Loss}
-On veut calculer l'espérance du contrat avec déductible ordinaire : 
+\begin{align*}
+h_{Y^P}(y) = h_X(y+d)
+\end{align*}
+
+Pour la v.a. $Y^L$ \textit{per-loss}\footnote{Il est à noter que la fonction de Hazard n'est pas définie à 0.},
+\begin{align*}
+f_{Y^L}(y) = f_X(y+d)
+\end{align*}
+
+\begin{align*}
+S_{Y^L}(y) = S_X(y+d)
+\end{align*}
+
+\begin{align*}
+F_{Y^L}(y) = F_X(y+d)
+\end{align*}
+
+\subsubsection{Espérance}
+\begin{equation}
+\esp{Y^L} = \esp{(X-d)_+} = \esp{X} - \esp{X \wedge d}
+\end{equation}
+
+\begin{equation}
+\esp{Y^P} = \frac{\esp{(X-d)_+}}{S_X(d)} = \frac{\esp{X} - \esp{X \wedge d}}{S_X(d)}
+\end{equation}
+
+Cette espérance s'appelle la prime \textit{Stop-Loss}, et elle est définie par
 \begin{align*}
 E[Y]		& = \esp{(X-d)_+} \\
 	& = \int_{d}^{\infty} (x-d) f(x) dx \\
@@ -252,45 +272,118 @@ E[Y]		& = \esp{(X-d)_+} \\
 	& = \int_{d}^{\infty} S(x) dx \\
 \end{align*}
 
-\begin{definition}[Prime Stop-Loss]
-On peut définir la prime Stop-Loss comme
-\begin{equation}
-\esp{(X-d)_+} = \esp{X} - \esp{X \wedge d}
-\end{equation}
-\begin{proof}
-% Intégrer la preuve faite en dépannage le 20 septembre par Marianne avec les intégrales.
-À compléter
-\end{proof}
-\end{definition}
+\subsection{Franchise deductible}
 
-\subsection{Cas avec inflation}
+\subsubsection{Définitions}
+Lorsque la perte dépasse le déductible franchise de montant $d$, l'assureur assume l'entièreté des coûts \footnote{On voit plus souvent ce type de déductible dans un contexte d'invalidité : si on est absent plus d'un certain nombre de jours du travail, on se fait rembourser toutes ses absences en salaire.}. Pour la v.a. $Y^L$, on a
 \begin{align*}
-Y	& = 
+Y^L = 
 \begin{cases}
-0		&, X' \leq d \\
-X' - d	&, d' > d \\
+0		& , X \leq d \\
+X		& , X > d \\
 \end{cases}
 \end{align*}
-où $X' = (1+r)X$. On peut travailler seulement avec le $X$ initial : 
-\begin{align*}
-Y	& = 
+Pour la v.a. $Y^P$,
+\begin{equation}
+Y^P = 
 \begin{cases}
-0			&, x \leq \frac{d}{1+r} \\
-(1+r)X - d 	&, x > \frac{d}{1+r} \\
+\text{non-défini}	& X \leq d \\
+X	& , X > d \\
+\end{cases}
+\end{equation}
+
+\subsubsection{Fonctions reliées}
+Les fonctions de la v.a. $Y^L$ sont
+\begin{align*}
+f_{Y^L}(y) = 
+\begin{cases}
+F_X(d)	& , y = 0 \\
+f_X(y)	& , y > 0 \\
 \end{cases}
 \end{align*}
 
-Et la prime \textit{Stop-Loss},
 \begin{align*}
-\esp{Y}		& = \int_{\frac{d}{1+r}}^{\infty} ((1+r) x - d) f_X(x) dx \\
-			& = (1+r) \int_{\frac{d}{1+r}}^{\infty} x f_X(x) dx - \frac{d}{1+r} \int_{\frac{d}{1+r}}^{\infty} f_X(x) dx \\
+F_{Y^L}(y) = 
+\begin{cases}
+F_X(d)	& , 0 < y \leq d \\
+F_X(y)	& , y \geq d \\
+\end{cases}
 \end{align*}
 
-\begin{definition}[Prime Stop-Loss sous le scénario d'inflation]
+\begin{align*}
+S_{Y^L}(y) = 
+\begin{cases}
+S_X(d)	& , 0 < y \leq d \\
+S_X(x)	& , y > d \\
+\end{cases}
+\end{align*}
+
+\begin{align*}
+h_{Y^L}(y)	= 
+\begin{cases}
+h_X(d)	& , 0 < y \leq d \\
+h_X(x)	& , y > d \\
+\end{cases}
+\end{align*}
+
+Pour la fonction $Y^P$ (\textit{per-payment}),
+\begin{align*}
+f_{Y^P}(y) = \frac{f_X(d)}{S_X(d)}
+\end{align*}
+
+\begin{align*}
+F_{Y^P}(y)	& = 
+\begin{cases}
+F_X(d)	& , y = 0 \\
+F_X(d)	& , 0 < y \leq d \\
+\frac{F_X(y) - F_X(d)}{S_X(d)}	& , y > d \\
+\end{cases}
+\end{align*}
+
+\begin{align*}
+S_{Y^P}(y) = 
+\begin{cases}
+1	& , 0 \leq y \leq d \\
+\frac{S_X(y)}{S_X(d)}	& , y > d \\
+\end{cases}
+\end{align*}
+
+\begin{align*}
+h_{Y^P}(y) = 
+\begin{cases}
+0		& , 0 < y \leq d \\
+h_X(y)	& , y > d \\
+\end{cases}
+\end{align*}
+
+\subsubsection{Espérance}
 \begin{equation}
-\esp{(X'-d)_+} = (1+r) \left( \esp{X} - \esp{X \wedge \frac{d}{1+r}} \right)
+\esp{Y^L} = \esp{(X-d)_+^F} = \esp{X} - \esp{X \wedge d} + d S_X(d)
+\end{equation}
+\begin{equation}
+\esp{Y^P} = \esp{(X-d)_+^F} = \frac{\esp{X} - \esp{X \wedge d}}{S_X(d)} + d
+\end{equation}
+
+\section{Loss Elimination Ratio}
+\begin{definition}[Loss Eliminating Ratio]
+Le Loss Eliminating Ratio ($LER$), nous permet d'obtenir le pourcentage de perte qu'on ne paiera pas grâce au déductible $d$ : 
+\begin{align*}
+LER 	& = \frac{\esp{X} - \esp{(X-d)_+}}{\esp{X}} \\
+\shortintertext{Mais on sait que}
+\esp{(X-d)_+}	& = \esp{X} - \esp{X \wedge d} \\
+\end{align*}
+Alors,
+
+\begin{equation}
+LER  = \frac{\esp{X \wedge d}}{\esp{X}} 
 \end{equation}
 \end{definition}
+
+\paragraph{Note sur l'inflation} Il arrive en exercice qu'on nous demande de comparer ce ratio avec et sans inflation. Soit un contrat avec $r$ $\%$ d'inflation. Alors, on peut trouver $\esp{(X-d)_+}$ qui tient compte de cette inflation : 
+\begin{align*}
+\esp{(X-d)_+^I} = (1+r) \left( \esp{X} - \esp{X \wedge \frac{d}{1_r}} \right)
+\end{align*}
+
 \begin{proof}
 \begin{align*}
 \esp{Y}	& = (1+r) \int_{\frac{d}{1+r}}^{\infty} x f_X(x) dx - d \int_{\frac{d}{1+r}}^{\infty} f_X(x) dx \\
@@ -301,134 +394,101 @@ Et la prime \textit{Stop-Loss},
 \end{proof}
 
 
-\section{Mean Excess Loss}
-Le Mean Excess Loss représente la perte excédentaire à $d$, sachant que $X > d$. Mathématiquement,
-\begin{align*}
-Y & = 
-\begin{cases}
-0		& , x \leq d \\
-X - d 	& , x > d \\
-\end{cases}
-\end{align*}
-où $X \sim \frac{f(x)}{S(d)}, x \geq d$.
-
-\subsection{Remarques}
-\begin{enumerate}[label=(\arabic*)]
-\item La fonction de densité de $Y$ est représentée par
-\begin{align*}
-\prob{Y^P = y} & =
-\begin{cases}
-\frac{f_X(y+d)}{S(d)} &  , y > 0 \\
-\end{cases} 
-\end{align*}
-
-\item $Y$ est une v.a. continue
-
-\item les fonctions de survie et de hasard sont, respectivement  :
-\begin{align*}
-h(y)	 	& = \frac{f_Y(y_d)}{S_Y(y+d)} \\
-S(y)		& = \frac{S_X(y+d)}{S(d)} \\
-\end{align*}
-
-\item l'espérance de la v.a. $Y^P$\footnote{Le $P$ en exposant signifie \textit{per pay}, qui indique que $Y$ est conditionnée sur $X$.} (mean excess loss) est définie par
-\begin{align*}
-e(d) & = \esp{Y^P} \\
-	& =  \esp{X - d | X > d} \\
-	& = \int_{d}^{\infty} (x-d) \frac{f(x)}{S(d)} dx \\
-\end{align*}
-On note donc
+\section{Policy Limits}
+\subsection{Définitions}
+Soit un contrat d'assurance où il est conclu que l'assureur débourse un maximum de $u$ dans le montant de la perte. Ce type de modification au contrat créé une v.a. \textit{censurée à droite}, i.e. le montant déboursé est maximisé à $u$. On définit $Y$ comme étant
 \begin{equation}
-e(d) S(d)	= \underbrace{\int_{d}^{\infty} (x-d) f(x) dx}_{\text{Prime Stop-Loss}}
+Y = 
+\begin{cases}
+X		& , X \leq u \\
+u		& , Y > u \\
+\end{cases}
 \end{equation}
-\end{enumerate}
 
-\begin{definition}[Loss Eliminating Ratio]
-Le Loss Eliminating Ratio ($LER$), nous permet d'obtenir le pourcentage de perte qu'on ne paiera pas grâce au déductible $d$ : 
+\subsection{Fonctions reliées}
+On peut déduire les fonctions reliées suivantes : 
 \begin{align*}
-ELR 	& = \frac{\esp{X} - \esp{(X-d)_+}}{\esp{X}} \\
-\shortintertext{Mais on sait que}
-\esp{(X-d)_+}	& = \esp{X} - \esp{X \wedge d} \\
-\end{align*}
-Alors,
-
-\begin{equation}
-ELR  = \frac{\esp{X \wedge d}}{\esp{X}} 
-\end{equation}
-\end{definition}
-
-\section{Contrat avec Déductible franchise}
-Soit $Y$ le contrat qui a un déductible franchise. Dans ce type de contrat, on va payer l'intégralité de la perte, lorsque celle-ci dépassera un déductible. Mathématiquement,
-\begin{align*}
-Y	& = 
+f_Y(y) = 
 \begin{cases}
-0	& , X \leq d \\
-X	& , X > d \\
+f_X(y)	& , y < u \\
+S_X(u)	& , y = u \\
 \end{cases}
 \end{align*}
 
-\subsubsection{Caractéristiques}
-\begin{enumerate}[label=(\arabic*)]
-\item La fonction de densité est définie par
 \begin{align*}
-f_Y(y)	& = 
+F_Y(y) =
 \begin{cases}
-F_X(d)	&, y = 0 \\
-f_X(y)	&, y > 0 \\
+F_X(y)	& , y \leq u \\
+1	& , y > u \\
 \end{cases}
 \end{align*}
 
-
-\item La fonction de répartition de ce contrat est
+\paragraph{Note sur l'inflation} Si on a $r$ $\%$ d'inflation, alors
 \begin{align*}
-F_Y(y)	& = 
-\begin{cases}
-F_X(d)	& , y = 0 \\
-F_X(d)	& , 0 < y \leq d \\
-\frac{F_X(y) - F_X(d)}{S_X(d)}	& , y > d \\
-\end{cases}
+\esp{X \wedge u} = (1+r) \esp{X  \wedge \frac{u}{1+r}}
 \end{align*}
-\end{enumerate}
-
-
-\section{Contrat avec déductible ordinaire et limite sous l'inflation}
-On peut combiner les contrats vu plus tôt, comme c'est le cas ici : ce contrat prévoit un déductible ordinaire $d$ ainsi qu'une limite au contrat $u$. De plus, on s'intéresse au scénario sous l'inflation.Alors,
-\begin{align*}
-Y & = 
-\begin{cases}
-0				& , X \leq \frac{d}{1+r} \\
-(1+r) X - d		& , \frac{d}{1+r} \leq X \leq \frac{u}{1+r} \\
-u=d				& , X > \frac{u}{1+r} \\
-\end{cases}
-\end{align*}
-Et l'espérance est
-\begin{definition}[Prime d'un contrat avec déductible $d$ et limite $u$]
-\begin{equation}
-\label{eq:prime-contrat-deductible+limite}
-\esp{Y} = (1+r) \left( \esp{X \wedge \frac{u}{1+r}} - \esp{X \wedge \frac{d}{1+r}}   \right)
-\end{equation}
-\end{definition}
 
 \begin{proof}
-On va utiliser $Y = Y_1 - Y_2$ pour prouver \eqref{eq:prime-contrat-deductible+limite}. On définit $Y_1$ et $Y_2$ : 
 \begin{align*}
-Y_1	& = 
-\begin{cases}
-0				& , X \leq \frac{d}{1+r} \\
-(1+r)X - d		& , X  > \frac{d}{1+r} \\
-\end{cases} \\
-Y_2	& = 
-\begin{cases}
-0				& , X \leq \frac{u}{1+r} \\
-(1+r) X - u		& , X > \frac{u}{1+r} \\
-\end{cases} \\
-\shortintertext{On connait leur espérance respective,} \\
-\esp{Y_1}	& = (1+r) \left( \esp{X} - \esp{X \wedge \frac{d}{1+r}} \right) \\
-\esp{Y_2}	& = (1+r) \left(\esp{X} - \esp{X \wedge \frac{u}{1+r}} \right) \\
-\shortintertext{Alors,}
-\esp{Y}		& = \esp{Y_1} - \esp{Y_2} \\
-			& = (1+r) \left( \esp{X \wedge \frac{u}{1+r}} - \esp{X \wedge \frac{d}{1+r}}  \right) \\
+\esp{Y}	& = \int_{0}^{\frac{u}{1+r}} (1+r) x f_X(x) dx  + u \int_{\frac{u}{1+r}}^{\infty} f_X(x) dx \\
+	& = (1+r) \int_{0}^{\frac{d}{1+r}} f f_X(x) dx + s S_X \left( \frac{u}{1+r} \right) \\
+	& = (1+r) \left( \int_{0}^{\frac{u}{1+r}} x f_X(x) dx  + \frac{u}{1+r} S_X \left( \frac{u}{1+r} \right)    \right)	 \\
+	& = (1+r) \esp{X  \wedge \frac{u}{1+r}}  \\
 \end{align*}
 \end{proof}
+
+\section{Coassurance, déductible et limites}
+\subsubsection{Définitions}
+Le livre nous donne une fonction de perte qui englobe 4 éléments en même temps : l'inflation, les déductibles, la coassurance\footnote{Dans ce type de contrat, la compagnie paie une proportion $\alpha$ de la perte, et le $(1-\alpha)$ restant est assumé par le titulaire de la police.} et les limites de police. Pour la v.a. $Y^L$,
+\begin{equation}
+Y^L = 
+\begin{cases}
+0		& ,\ x  < \frac{d}{1+r} \\
+\alpha \Big( (1+r) x - d \Big)	& ,\ \frac{d}{1+r} \leq x < \frac{u}{1+r} \\
+\alpha (u-d)		& ,\ x \geq \frac{u}{1+r} \\
+\end{cases}
+\end{equation}
+et pour $Y^P$,
+\begin{equation}
+Y^L = 
+\begin{cases}
+\text{Non-défini}		& ,\ x  < \frac{d}{1+r} \\
+\alpha \Big( (1+r) x - d \Big)	& ,\ \frac{d}{1+r} \leq x < \frac{u}{1+r} \\
+\alpha (u-d)		& ,\ x \geq \frac{u}{1+r} \\
+\end{cases}
+\end{equation}
+
+\subsubsection{Espérance}
+\begin{equation}
+\esp{Y^L} = \alpha (1+r) \left( \esp{X \wedge \frac{u}{1+r}} - \esp{X \wedge \frac{d}{1+r}}   \right)
+\end{equation}
+\begin{equation}
+\esp{Y^P} = \frac{\esp{Y^L}}{S_X \left( \frac{d}{1+r} \right)}
+\end{equation}
+
+
+% Preuve à retravailler
+%\begin{proof}
+%On va utiliser $Y = Y_1 - Y_2$ pour prouver. On définit $Y_1$ et $Y_2$ : 
+%\begin{align*}
+%Y_1	& = 
+%\begin{cases}
+%0				& , X \leq \frac{d}{1+r} \\
+%(1+r)X - d		& , X  > \frac{d}{1+r} \\
+%\end{cases} \\
+%Y_2	& = 
+%\begin{cases}
+%0				& , X \leq \frac{u}{1+r} \\
+%(1+r) X - u		& , X > \frac{u}{1+r} \\
+%\end{cases} \\
+%\shortintertext{On connait leur espérance respective,} \\
+%\esp{Y_1}	& = (1+r) \left( \esp{X} - \esp{X \wedge \frac{d}{1+r}} \right) \\
+%\esp{Y_2}	& = (1+r) \left(\esp{X} - \esp{X \wedge \frac{u}{1+r}} \right) \\
+%\shortintertext{Alors,}
+%\esp{Y}		& = \esp{Y_1} - \esp{Y_2} \\
+%			& = (1+r) \left( \esp{X \wedge \frac{u}{1+r}} - \esp{X \wedge \frac{d}{1+r}}  \right) \\
+%\end{align*}
+%\end{proof}
 
 \begin{align*}
 \esp{Y}	& = \int_{\frac{d}{1+r}}^{\frac{u}{1+r}} ((1+r) x - d) f_X(x) dx + \int_{\frac{u}{1+r}}^{\infty} (u-d) f_X(x) dx \\
@@ -436,72 +496,22 @@ Y_2	& =
 \end{align*}
 
 
-\section{Co-assurance}
-Soit $\alpha$ le pourcentage de co-assurance.
-
-\begin{align*}
-Y	& = 
-\begin{cases}
-0		& , X \leq d \\
-X - d	& , X > d \\
-\end{cases}
-\end{align*}
-
-\begin{align*}
-Y^C	& = 
-\begin{cases}
-0		& , X  \leq d \\
-\alpha(X - d) 	& , X > d \\
-\end{cases}
-\end{align*}
-Alors,
-\begin{equation}
-\esp{Y^C} = \alpha \esp{Y}
-\end{equation}
-
-\section{Cas général}
-Voici une formule générale, avec un déductible $d$, un taux d'inflation $r$, un pourcentage de coassurance de $\alpha$ et une limite de $u$ : 
-\begin{equation}
-Y^L = 
-\begin{cases}
-0		& ,\ x \leq \frac{d}{1+r} \\
-\alpha \Big( (1+r) x - d \Big)	& ,\ \frac{d}{1+r} \leq x \leq \frac{u}{1+r} \\
-\alpha (u-d)		& ,\ x > \frac{u}{1+r} \\
-\end{cases}
-\end{equation}
 
 
-\chapter{Estimation non-paramétrique}
 
-\paragraph{À savoir pour examen partiel}
 
-\begin{enumerate}[label=\faCheck]
-\item Loi normale
-\item Loi gamma
-\item Loi poisson
-\item Loi binomiale
-\item intégration par partie poru la loi exponentielle
-\item fonction densité, moyenne, variance et fgm
-\end{enumerate}
-
-\section{Terminologie}
-Pour $X_1, ..., X_n $ qui sont $iid$.
-
-On a
-\begin{align*}
-\esp{g(X)} & = \int g(x) d F(x) \\
-	& = \int g(x) f_X(x) dx \\
-	& = \int g(x) F_n(x) \\
-	& = \frac{1}{n} \sum_{i=1}^{n} g(x_i) \\
-\end{align*}
-... est un estimateur non-paramétrique
+\setcounter{chapter}{10}
+\chapter{Estimation de données complètes}
+\setcounter{section}{1}
+% Commence à la section 11.2
 
 \section{Estimation de données complètes}
+\subsection{Estimation de la fonction de répartition empirique}
 On cherche à estimer $F(t)$ ou $S(t)$, lorsque nos données sont complètes (i.e. $x_1, ..., x_n$ qui sont $iid$). Alors, l'estimateur non paramétrique pour $F(t)$ : 
 \begin{equation}
-F_n(t)	 = \frac{1}{n} \sum_{i=1}^{n} 1_{[x_i \leq t]}
+F_n(t)	 = \frac{1}{n} \sum_{i=1}^{n} \indic{x_i \leq t}
 \end{equation}
-où $1_{[\cdot]}$ représente une fonction indicatrice.
+où $\indic{.}$ représente une fonction indicatrice.
 
 $F_x(t)$ aura donc la forme suivante : 
 \begin{equation}
@@ -516,12 +526,10 @@ F_n(t) =
 \end{equation}
 où $t \in [0, x_{(n)}]$.
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.4]{Figures/Fct_de_repartition_empirique.png}
-	\caption{Fonction de répartition empirique}
- \end{figure}
- \footnotemark{\url{https://pmb.univ-saida.dz/buscopac/doc_num.php?explnum_id=142}}
+\begin{center}
+\includegraphics[scale=0.3]{Figures/Fct_de_repartition_empirique}
+\end{center}
+
 
 \paragraph{Remarques}
 \begin{enumerate}[label=(\arabic*)]
@@ -541,25 +549,76 @@ Var \left( F_n(t) \right) & = \frac{1}{n^2}  n F(t) S(t) \\
 \end{align*}
 \end{enumerate}
 
-\subsection{Estimation de donnée groupées (Fonction OGIVE)}
-\red{\textbf{CETTE MATIÈRE NE SERA PAS TESTÉE À L'EXAMEN}}
+\subsection{\textit{Cumulative hazard-rate function}}
+On utilise cette fonctoin pour pouvoir réussir à estimer la fonction de densité et le \textit{hazard rate} empirique. En effet, puisque la distribution empirique est discrète, on ne peut pas dériver $F_n(x)$ pour obtenir $f_n(x)$ et $h_n(x)$. La fonction de hazard cumulative se définit par
+\begin{equation}
+H_X(x) = - \ln S_X(x)
+\end{equation}
+
+\subsection{Notation à utiliser pour la distribution empirique}
+\begin{enumerate}[label=\faAngleRight]
+\item \blue{$y_1 < y_2 < ... < y_k$} : les $k$ valeurs uniques qui apparaissent dans l'échantillon de $n$. \textbf{Note : } $k \leq n$.
+
+\item \blue{$s_j$} : nombre de fois que l'observation $y_j$ est observée dans l'échantillon. On a
+\begin{align*}
+\sum_{j=1}^{k} s_j = 1
+\end{align*}
+
+\item \blue{$r_j$} : nombre d'observations qui sont plus grandes ou égales à $y_j$. On a
+\begin{align*}
+r_j = \sum_{i=j}^{k} s_i
+\end{align*}
+
+\item Avec cette nouvelle notation, on peut ré-écrire la fonction de répartition empirique : 
+\begin{equation}
+F_n(x) = 
+\begin{cases}
+0						& , x < y \\
+1 - \frac{r_j}{n}		& , y_{j-1} \leq x \leq y_j \quad j = 2, ..., k \\
+1						& , x \geq y_k \\
+\end{cases}
+\end{equation}
+\end{enumerate}
+
+\subsection{Estimateur de Nelson \r{A}alen}
+\label{subsec:nelson-Aalen}
+Pour pouvoir estimer la \textit{Cumulative hazard-rate function}, on doit utiliser un estimateur qui se base sur la notation utilisée à la sous-section précédente, soit le \textit{Nelson \r{A}alen estimate} : 
+\begin{equation}
+\hat{H}(x) = 
+\begin{cases}
+0		& , x < y_1 \\
+\sum_{i=1}^{j-1} \frac{s_i}{r_i}	& , y_{j-1} \leq x \leq y_j \quad j = 2, ..., k \\
+\sum_{i=1}^{k} \frac{s_i}{r_i}		& , x \geq y_k \\
+\end{cases}
+\end{equation}
+
+\section{Distribution empirique avec données groupées}
+
+\subsection{Fonction OGIVE}
+\red{\textbf{CETTE MATIÈRE NE SERA PAS TESTÉE À L'EXAMEN intra A2018}}
 
 
 %% VOIR SECTION 11.3 dans le livre %%
 % Grahique de fonction de répartition empirique à insérer ici
-Dans certains contextes, on a $n$ données qui sont groupées en intervalle. La fonction OGIVE permet d'interpoler entre 2 points $x_i$ et $_{i+1}$.
+Dans certains contextes, on a $n$ données qui sont groupées en intervalles. La fonction OGIVE permet d'interpoler entre 2 points $c_{j-1}$ et $c_{j}$.
 % Graphique des c^(i) et des intervalles n à insérer ici %%
 \begin{align*}
 c_{j-1} 	 \leq x  \leq c_j \\
 F_n(c_{j-1})	 \leq F_n(x)	 \leq F_n(c_j) \\
 \end{align*}
+On peut déterminer la valeur empirique de $F_n(x)$ aux bornes des classes, avec
+\begin{align*}
+F_n(x) = \frac{\sum_{i=1}^{j} n_i}{n}
+\end{align*}
+où $n_i$ est le nombre d'observations qui sont entre $c_{j-1}$ et $c_j$. Toutefois, pour les valeurs entre deux bornes $c_0 < c_1 < ... < c_k$, il faut approximer avec la fonction OGIV ci-dessous : 
 
-
-La formule est
 \begin{equation}
 \label{eq:repart-OGIVE}
 F_n^{\text{OGIVE}}(x) = \frac{c_j - x}{c_j - c_{j-1}} F_n(c_j -1) + \frac{x - c_{j-1}}{c_j - c_{j-1}} F_n(c_j)
 \end{equation}
+
+
+
 \paragraph{Remarques}
 \begin{enumerate}[label=(\arabic*)]
 \item Si $x = c_{j-1}$,
@@ -570,72 +629,79 @@ F_n(c_{j-1}) = F_n^{\text{OGIVE}}(c_{j-1}) \\
 \begin{align*}
 F_n(c_j) = F_n^{\text{OGIVE}}(c_j)
 \end{align*}
-\end{enumerate}
 
-\begin{exemple}[Exemple concret]
-L'assureur a groupé $n=10$ données en intervalles.
-\begin{center}
-\begin{tikzpicture}[x = 1cm]
-% Dessiner la ligne
-\draw[black, |->, thick]
-	(0,0) -- (5,0);
-			
-% Indiquer les intervalles
-\foreach \t in 	{0, 1, 2, 3, 4}
-{
-	\draw[thick]
-		(\t, 0) -- ++(0, 5pt)
-			node[above] {\t};
-} 	
-\end{tikzpicture}
-\end{center}
-Alors,
-\begin{align*}
-F_n(t)	& = \frac{1}{n} \sum_{i=1}^{n} I[x_i \leq t] \\
-F_n(1)	& = \frac{2}{10} \\
-F_n(2)	& = \frac{5}{10} \\
-F_n(3)	& = \frac{9}{10} \\
-F_n(4)	& = \frac{10}{10} \\
-		& = 1 \\
-\end{align*}
-% graphique à insérer avec les F_n ci-dessus %%
-\end{exemple}
-
-En dérivant \eqref{eq:repart-OGIVE}, on obtient
+\item En dérivant \eqref{eq:repart-OGIVE}, on obtient
 \begin{align*}
 f_n(x) 	& = \derivee{x} F_x(x) \\
 		& = \frac{1}{c_j - c_{j-1}} F_x(c_j) - \frac{1}{c_j - c_{j-1}} F_n(c_{j-1}) \\
 		& = \frac{F_n(c_j) - F_n(c_{j-1})}{c_j - c_{j-1}} \\ \numberthis
 \end{align*}
+\end{enumerate}
 
-\section{Estimation de la fonction de survie}
-Soit $S_n(t)$ la fonction de survie empirique. Alors,
+\chapter{Estimation de données modifiées}
+\section{Point estimation}
+\subsection{Définitions importante}
+Un vocabulaire spécifique aux données modifiées est utilisé, soit
+
+\begin{tabular}{|>{\bfseries} l |>{\em}l |p{3cm}|}
+\hline
+Définition	& Terme anglais & Explication \\
+\hline	\hline
+Tronquée à gauche	& left truncated at $d$ & si la valeur observée est plus basse dque $d$, elle n'est pas enregistrée \\
+Tronquée à droite	& right truncated at $u$ & si la valeur observée est plus grande que $u$, elle n'est pas enregistrée \\
+Censurée à gauche & left censured at $d$ & si la valeur observée est plus basse que $d$, on indique $d$ dans les données modifiées \\
+Censurée à droite & right censored at $u$ & si la valeur observée est plus grande que $u$, on indique $u$ dans les données modifiées \\
+\hline
+\end{tabular}
+
+\textbf{Note} : Il arrive aussi que les données soient \emph{shifted at $d$}, ce qui veut dire qu'on soustrait $d$ aux données (souvent en présence d'un déductible). 
+
+\subsubsection{Notation}
+\begin{enumerate}[label=\faAngleRight]
+\item \blue{$y_1 < y_2 < ... < y_k$} : les $k$ valeurs uniques qui apparaissent dans l'échantillon.
+
+\item \blue{$x_j$} : la $j$\up{e} données non-censurée qui apparait dans l'échantillon
+
+\item \blue{$d_j$} : le montant auquel $x_j$ est tronquée. Si il n'y a pas de troncage, alors $d_j = 0$.
+
+\item \blue{$u_j$} : la $j$ \up{e} données censurée qui apparait dans l'échantillon.
+
+\item \blue{$r_j$} : nombre d'observations qui sont plus grandes ou égales à $y_j$ (\emph{risk set})
 \begin{align*}
-S_n(t) 	& = 1 - F_n(t) \\
-		& = \frac{n}{n} - \frac{1}{n} \sum_{i=1}^{n} \indic{x_i \leq t} \\ 
-		& = \frac{1}{n} \sum_{i=1}^{n} \left( 1 - \indic{x_i \leq t} \right) \\
-		& = \frac{1}{n} \sum_{i=1}^{n} \indic{x_i > t} \\
+r_j = \text{\# of $x_i$} + \text{\# of $u_i$} - (\text{\# of $d_i$} \geq y_j)
 \end{align*}
 
-\section{Estimateur  Kaplan-Meier}
+\item \blue{$s_i$} : nombre de décès au temps $i$.
+\end{enumerate}
 
-\section{l'approche conditionnelle pour estimer $S(t)$}
-% timeline à ajouter ici
+\subsubsection{Estimateur de Kaplan-Meier}
+Cet estimateur est une version modifiée de l'estimateur de Nelson-\r{A}alen vu à la section \ref{subsec:nelson-Aalen}. Avec l'information des données et en utilisant la notation vue à la sous-section précédente, on peut estimer la fonction de survie empirique : 
+\begin{equation}
+\hat{S}_n(t) =
+\begin{cases}
+1		& , 0 \leq t < y_1 \\
+\prod_{i=1}^{j-1} \left( \frac{r_i - s_i}{r_i} \right) & , y_{j-1} \leq t < y_j \quad j = 2, ..., k \\
+\prod_{i=1}^{k} \left( \frac{r_i - s_i}{r_i}  \right) & t \geq y_k \\
+\end{cases}
+\end{equation}
 
-\begin{align*}
-S(t)		& = \frac{S(t_1)}{S(t_0)} \times \frac{S(t_2)}{S(t_1)} \times ... \times \frac{S(t)}{S(t_{i-1}} \\
-	& = \frac{S(t)}{\underbrace{S(t_0)}_{1}} \\
-	& = S(t) \\
-\end{align*}
-Alors,
-\begin{equation}
-S(t) = \prod_{j \leq t} \px{j}
-\end{equation}
-Ça nous suggère un autre estimateur pour $S(t)$ : 
-\begin{equation}
-\hat{S}(t) = \prod_{j \leq t} (1 - \hat{q}_j )
-\end{equation}
-Ceci est l'approche conditionnelle pour estimer $S(t)$. Et si jamais on a des données complètes, $S_n(t) = \hat{S}(t)$.
+
+\section{Espérance, Variance et et intervalle d'estimation}
+
+\subsubsection{Contexte}
+On s'intéresse à l'espérance et la variance de la fonction de survie $S_n$, qui suite une binomiale (i.e. $S_n(x) \sim Bin(n, S(x))$. Si on connaissait $S(x)$, on pourrait facilement déduire l'espérance et la variance avec les formules qu'on connaît. Toutefois, puisqu'on cherche souvent à estimer $S(x)$, il faudra aussi estimer l'espérance et la variance.
+
+\hl{Section à compléter}
+
+
+
+
+
+
+
+
+
+
 
 
 
