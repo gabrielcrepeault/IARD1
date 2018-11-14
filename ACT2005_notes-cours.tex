@@ -638,6 +638,39 @@ f_n(x) 	& = \derivee{x} F_x(x) \\
 \end{align*}
 \end{enumerate}
 
+\begin{exemple}[Fonction R \texttt{ogive}]
+Du package \href{https://cran.r-project.org/web/packages/actuar/actuar.pdf}{actuar}, on peut utiliser la fonction \texttt{ogive()} pour calculer les probabilités empiriques à des points précis de nos données lorsqu'elles sont groupées, mais aussi interpoler entre 2 valeurs : 
+\begin{verbatim}
+## Fonction OGIVE du package actuar de Vincent Goulet
+## Exemple numéro 5.2 du Loss Models
+## page 68, 4e édition
+library(actuar)
+
+## On définit le vecteur cj des bornes et
+## un vecteur nj des fréquences empiriques
+# note : il faut forcer une borne supérieure
+cj <- c(0, 300, 350, 400, 450, 500, 600, 2000)
+nj <- c(42, 3, 5, 5, 0, 5, 40)
+
+# On calcule la fonction ogive avec la fonction du même nom
+Fn <- ogive(cj, nj)
+
+y <- 500 / (1.1)^3
+# On calcule la probabilité demandée
+1 - Fn(y)
+[1] 0.5243426
+
+# On peut aussi faire un graphique de la
+## fonction empirique OGIVE
+plot(Fn)
+\end{verbatim}
+Et on obtient le graphique suivant : 
+\begin{center}
+\includegraphics[scale=0.5]{Figures/R-ogive-plot.png}
+\end{center}
+\end{exemple}
+
+
 \chapter{Estimation de données modifiées}
 \section{Point estimation}
 \subsection{Définitions importante}
