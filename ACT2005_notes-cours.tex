@@ -33,8 +33,9 @@ Ce document résume les notes de cours prises en classe dans le cours de Mathém
 % --------------
 
 
-\setcounter{chapter}{2} % Pour aller directement au chapitre 3
+\part{Matière pour l'examen partiel}
 \chapter{Quantités des distributions à connaître}
+Chapitre 3 du Loss Models
 \section{Moments}
 
 \paragraph{\textit{Raw moments}}
@@ -195,11 +196,8 @@ Soit une distribution ayant fonction de densité $f_X(x)$ et fonction de hazard 
 \end{enumerate}
 
 
-
-
-
-\setcounter{chapter}{7}
 \chapter{Fréquence et sévérité avec modifications aux contrats}
+Chapitre 8 du Loss Models
 \setcounter{section}{1}
 \section{Déductibles}
 \subsection{Ordinary deductible}
@@ -496,12 +494,8 @@ Y^L =
 \end{align*}
 
 
-
-
-
-
-\setcounter{chapter}{10}
 \chapter{Estimation de données complètes}
+Chapitre 11 du Loss Models
 \setcounter{section}{1}
 % Commence à la section 11.2
 
@@ -672,6 +666,7 @@ Et on obtient le graphique suivant :
 
 
 \chapter{Estimation de données modifiées}
+Chapitre 12 du Loss Models
 \section{Point estimation}
 \subsection{Définitions importante}
 Un vocabulaire spécifique aux données modifiées est utilisé, soit
@@ -726,6 +721,132 @@ On s'intéresse à l'espérance et la variance de la fonction de survie $S_n$, q
 
 \hl{Section à compléter}
 
+
+
+\part{Matière pour l'examen final}
+
+\chapter{Continuous models (5)}
+
+\section{Multiplication par une constante}
+Soit $X$ la v.a. représentant les pertes et $\theta$ un paramètre d'échelle (\emph{scale parameter}). On peut définir la v.a. $Y$ par
+\[Y = \theta X \]
+Alors,
+\begin{align*}
+F_Y(y) 	 & = \prob{Y \leq y} \\ 
+	& =\prob{\theta X \leq y} \\
+	& = \prob{X \leq \frac{y}{\theta}} \\
+	& = F_X \left( \frac{y}{\theta} \right) \\ \numberthis
+\end{align*}
+Et on peut aussi trouver que
+\begin{align*}
+f_Y(y) & = \derivee{y} F_Y(y) \\
+	& = \derivee{y} \left\{ F_X \left( \frac{y}{\theta} \right)     \right\} \\
+	& = \frac{1}{\theta} f_X \left( \frac{y}{\theta} \right) \\ \numberthis
+\end{align*}
+
+\paragraph{À noter} Si on doit appliquer une transformation impliquant une puissance (\emph{raising to a power}, voir section \autoref{sec:raise-to-power}), on applique cette dernière transformation avant d'appliquer le paramètre d'échelle $\theta$.
+
+
+\section{Raising to a power}
+% Label pour faire référence la section précédente.
+\label{sec:raise-to-power}
+
+Soit $X$ une v.a. représentant la perte avec une loi de probabilité quelquonque et la v.a. $Y$ tel que
+\[Y = X^{\frac{1}{\tau}} \]
+avec $\tau > 0$. On peut trouver $F_Y(y)$ ainsi que $f_Y(y)$ : 
+\begin{align*}
+F_Y(y) & = \prob{Y \leq y} \\
+	& = \prob{ X^{\frac{1}{\tau}} \leq y} \\
+	& = \prob{X \leq y^\tau} \\
+	& = F_X \left( y^\tau \right) \\ \numberthis
+\end{align*}
+et
+\begin{align*}
+f_Y(y)	& = \derivee{y} F_y(y) \\
+	& = \derivee{y}  F_X \left( y^\tau \right) \tau y^{\tau -1} f_X \left(y^\tau   \right) \\ \numberthis
+\end{align*}
+
+\paragraph{Note} On préfère toujours des paramètres positifs, donc on va ajuster les formules avec des constantes négatives dans certains cas.
+
+\begin{exemple}[Notation dans le livre \emph{Loss Models}]
+La notation utilisée par le livre est la suivante : 
+\begin{enumerate}
+\item si $\tau > 0$ : \emph{transformed}
+\item si $\tau =  -1$ : \emph{inverse}
+\item si $\tau < 0$ et $\tau \neq 1$ : \emph{inverse-transformed}
+\end{enumerate}
+\end{exemple}
+
+\section{Exponentiation}
+Soit $X$ une v.a. représentant la perte. On définit $Y$ comme
+\[Y = \exp(X)  \]
+Alors, on trouve
+\begin{align*}
+F_Y(y)	& = \prob{Y \leq y } \\
+	& = \prob{e^X \leq y } \\
+	& = \prob{X \leq \ln y} \\
+	& = F_x( \ln y) \\ \numberthis
+\end{align*}
+et 
+\begin{align*}
+f_Y(y)	& = \derivee{y} F_Y(y) \\
+	& = \derivee{y} \left\{F_x( \ln y)   \right\} \\
+	& = \frac{1}{y} f_X(\ln y) \\ \numberthis
+\end{align*}
+
+\paragraph{Note} La loi Log-Normale est en fait une transformation exponentielle de la Loi Normale.
+
+\section{Mélanges}
+On peut créer des lois mélanges. En effet, il arrive qu'on ait une distribution dont l'un des paramètres est lui-même distribué aléatoirement selon une autre distribution, tel que
+\[ X | \Lambda \sim \text{une certaine loi}   \]
+\[ \Lambda \sim \text{une autre loi (ou la même!)} \] 
+
+On peut trouver les fonctions de densité et de répartition de ces différentes lois : 
+\begin{equation}
+f_X(x) = \int_{- \infty}^{\infty} f_{X|\Lambda}(x | \lambda) f_\Lambda(\lambda) d \lambda
+\end{equation}
+\begin{equation}
+F_X(x) = \int_{- \infty}^{\infty} F_{X | \Lambda}(x | \lambda) f_\Lambda(\lambda) d \lambda
+\end{equation}
+De plus, on peut trouver l'espérance et la variance de ces lois mélanges avec les théorèmes de l'espérance et la variance conditionnelle : 
+\begin{equation}
+\esp{X} = \esp{ \esp{X | \Lambda} }
+\end{equation}
+\begin{equation}
+Var(X) = \esp{Var(X | \Lambda)} + Var \left( \esp{X | \Lambda}   \right)
+\end{equation}
+
+
+\section{Frailty models}
+%% À valider si c'est à l'examen!
+\red{Est sur le syllabus des examens professionnels, mais ne semble pas être à l'étude pour le cours IARD1 ...} \\
+
+Soit un paramètre $\Lambda > 0$ (\emph{frailty random variable}) qu'on va utiliser pour trvouer la \emph{hazard-rate} conditionnel $h_{X | \Lambda}$ tel que
+\begin{equation}
+h_{X | \Lambda}(x | \lambda) = \lambda a(x)
+\end{equation}
+où $a(x)$ est une fonction quelquonque et la distribution de $\Lambda = \lambda$ est connu. Alors, on peut trouver la fonction de survie de $S_{X | \Lambda}(x | \lambda)$ avec des des propriétés que l'on connait : 
+\begin{align*}
+S_{X | \Lambda}(x | \lambda) & = e^{- \int_{0}^{x} h_{X | \Lambda}(t | \lambda) dt} \\
+	& = e^{- \lambda A(x)} \\
+	& = M_\Lambda \left( - A(x) \right) \\
+	& = \laplace_\Lambda \left( A(x) \right) \\
+\end{align*}
+
+
+\section{Splicing}
+Soit $X_1, ..., X_k$ les différentes distributions que peut prendre la v.a. $X$ et $\alpha_i$ la probabilité que $X \sim X_i \quad , i = 1,2, ..., k$.  Pour $\sum_ \alpha = 1$, on a donc
+\begin{align*}
+f_X(x)	& = 
+\begin{cases}
+\alpha_1 f_1(x)	& , c_0 < x < c_1 \\
+\alpha_2 f_2(x)	& , c_2 < x < c_2 \\
+...							& \\
+\alpha_k f_1(k)	& , c_{k-1} < x < c_k \\
+\end{cases}
+\end{align*}
+
+\paragraph{Note} Dans un problème, on peut soit demander de calculer la fonction de répartition à un certain point, ou encore nous demander de trouver les coefficients $\alpha_i$ en connaissant les différentes fonctions de répartition et les probabilités rattachées.
 
 
 
