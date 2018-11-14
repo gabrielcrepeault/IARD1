@@ -23,8 +23,8 @@
 %	\usepackage{concrete}
 %	\usepackage{mathpazo}
 %	\usepackage{frcursive} %% permet d'écrire en lettres attachées
-%	\usepackage{aeguill}
-	\usepackage{mathptmx}
+ \usepackage{aeguill}
+% 	\usepackage{mathptmx}
 %	\usepackage{fourier} 
 
 % Mathematics configuration
@@ -89,8 +89,9 @@ after title = {\large \hfill \faBook}
 \newcommand{\entiers}{\mathbb{Z}}
 \newcommand{\naturels}{\mathbb{N}}
 \newcommand{\eval}{\biggr \rvert}
-\newcommand{\esp}[1]{E \left[ #1 \right]} % espérance
-\newcommand{\var}[1]{Var \left( #1 \right)} % variance
+\newcommand{\esp}[1]{\mathrm{E} \left[ #1 \right]} % espérance
+\newcommand{\variance}[1]{\mathrm{Var} \left( #1 \right)} % variance
+\newcommand{\covar}[1]{\mathrm{Cov} \left( #1 \right)} % variance
 \newcommand{\prob}[1]{\Pr \left( #1 \right)} % probabilité entre parenthèses
 \newcommand{\laplace}{\mathcal{L}}
 

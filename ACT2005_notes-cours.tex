@@ -13,6 +13,9 @@ Notes de cours}
 \author{Gabriel Crépeault-Cauchon \\
 Nicholas Langevin}
 
+% Ajout temporaire, à mettre dans le préambule éventuellement
+\usepackage{mathrsfs}
+
 
 % -----------------------------------
 % --- DÉBUT DU DOCUMENT ---
@@ -770,7 +773,7 @@ f_Y(y)	& = \derivee{y} F_y(y) \\
 
 \begin{exemple}[Notation dans le livre \emph{Loss Models}]
 La notation utilisée par le livre est la suivante : 
-\begin{enumerate}
+\begin{enumerate}[label=\faAngleRight]
 \item si $\tau > 0$ : \emph{transformed}
 \item si $\tau =  -1$ : \emph{inverse}
 \item si $\tau < 0$ et $\tau \neq 1$ : \emph{inverse-transformed}
@@ -847,6 +850,52 @@ f_X(x)	& =
 \end{align*}
 
 \paragraph{Note} Dans un problème, on peut soit demander de calculer la fonction de répartition à un certain point, ou encore nous demander de trouver les coefficients $\alpha_i$ en connaissant les différentes fonctions de répartition et les probabilités rattachées.
+
+
+\chapter{Modèle de perte aggrégée (9)}
+
+\section{Modèle composé (fréquence-sévérité) pour les pertes aggrégées}
+On définit les variables aléatoires suivantes : 
+\begin{enumerate}[label=\faAngleRight]
+\item $S$ : Perte totale pour le portefeuille au complet ;
+\item $N$ : Nombre de réclamations observées dans l'intervalle de temps. (\textbf{fréquence}) ;
+\item $X_1, ..., X_n$ : Montant de perte relié à la $i$\up{e} réclamation (\textbf{sévérité}).\footnote{Les $X_i$ sont iid et indépendants de $N$.}
+\end{enumerate}
+On a donc
+\[ S = X_1 + ... X_n  \]
+et on peut trouver diverses quantités, tel que la fonction de répartition : 
+\begin{equation}
+F_S(x) = \sum_{n=0}^{\infty} F_X^{*n}(x) \prob{N = n}
+\end{equation}
+où $F_X^{*n} = \prob{X_1 + ... + X_n \leq n}$. \\
+
+On peut aussi obtenir la fonction gnératrice des moments : 
+\begin{equation}
+\mathcal{M}_S(t) = \mathcal{P}_N \left( \mathcal{M}_X(t) \right) 
+\end{equation}
+L'espérance et la variance peuvent être obtenues avec les propriétés d'espérance et variance conditionnelle : 
+\begin{align*}
+\esp{S}	& = \esp{ \esp{S | N}} \\
+	& = \esp{\esp{\sum_{i=1}^{n} X_i  }} \\
+	& = \esp{\sum_{i=1}^{n} \esp{X_i}} \\
+	& \overset{iid}{=} \esp{N \esp{X}} \\
+	& = \esp{N} \esp{X} \\ \numberthis
+\end{align*}
+
+\begin{align*}
+\variance{S}	& = \variance{\esp{S | N}}  + \esp{\variance{S | N}} \\
+	& = \variance{\esp{\sum_{i=1}^{n} X_i}} + \esp{\variance{\sum_{i=1}^{n} X_i}} \\
+	& \variance{ \sum_{i=1}^{n} \esp{X_i}} + \esp{\sum_{i=1}^{n} \variance{X_i}} \quad \text{, par indépendance des $X_i$} \\
+	& \overset{iid}{=} \variance{N \esp{X}} + \esp{N \variance{X}} \\
+	& = \esp{X}^2 \variance{N} + \esp{N} \variance{X} \\ \numberthis
+\end{align*}
+
+\chapter{Frequentist estimation}
+
+\section{Méthode des moments}
+
+
+
 
 
 
