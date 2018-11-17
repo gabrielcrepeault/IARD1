@@ -31,14 +31,31 @@ Nicholas Langevin}
 
 % --- RÉSUMÉ ---
 \begin{abstract}
-Ce document résume les notes de cours prises en classe dans le cours de Mathématiques actuarielles IARD-1, ainsi que des notions prises du livre \textit{LOSS MODELS - From Data to Decisions, 4\up{th} edition}.
+Ce document résume les notes de cours prises en classe dans le cours de Mathématiques actuarielles IARD-1, ainsi que des notions prises du livre \textit{LOSS MODELS - From Data to Decisions, 4\up{th} edition}. Il est séparé en 2 parties : la matière qui a été couverte avant et après l'examen partiel. \\
+
+Le chapitre correspondant dans le \emph{Loss Models, 4\up{th} edition} est indiqué entre parenthèse des chapitres. \\
+
+De plus, ce document essaie le plus possible de suivre la numérotation des sections du \emph{Loss Models}. C'est pourquoi il arrive parfois qu'il y ait des sauts de section.
 \end{abstract}
 % --------------
 
 
 \part{Matière pour l'examen partiel}
-\chapter{Quantités des distributions à connaître}
-Chapitre 3 du Loss Models
+
+\chapter{Quelques rappels de Probabilité}
+La loi gamma : 
+\begin{align*}
+\Gamma(\alpha) = \int_{0}^{\infty} x^{\alpha-1} e^{-x} dx
+\end{align*}
+De plus, on a
+\[\Gamma(\alpha) = (\alpha-1) \Gamma(\alpha-1)\]
+et
+\[\Gamma(n) = (n-1)!\]
+
+
+
+
+\chapter{Quantités des distributions à connaître (3)}
 \section{Moments}
 
 \paragraph{\textit{Raw moments}}
@@ -199,8 +216,7 @@ Soit une distribution ayant fonction de densité $f_X(x)$ et fonction de hazard 
 \end{enumerate}
 
 
-\chapter{Fréquence et sévérité avec modifications aux contrats}
-Chapitre 8 du Loss Models
+\chapter{Fréquence et sévérité avec modifications aux contrats (8)}
 \setcounter{section}{1}
 \section{Déductibles}
 \subsection{Ordinary deductible}
@@ -497,10 +513,9 @@ Y^L =
 \end{align*}
 
 
-\chapter{Estimation de données complètes}
-Chapitre 11 du Loss Models
+\chapter{Estimation de données complètes (11)}
 \setcounter{section}{1}
-% Commence à la section 11.2
+% Commence à la section 11.2 dans le Loss Models 4th edition
 
 \section{Estimation de données complètes}
 \subsection{Estimation de la fonction de répartition empirique}
@@ -668,8 +683,7 @@ Et on obtient le graphique suivant :
 \end{exemple}
 
 
-\chapter{Estimation de données modifiées}
-Chapitre 12 du Loss Models
+\chapter{Estimation de données modifiées (12)}
 \section{Point estimation}
 \subsection{Définitions importante}
 Un vocabulaire spécifique aux données modifiées est utilisé, soit
