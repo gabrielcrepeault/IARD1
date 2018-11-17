@@ -35,7 +35,9 @@ Ce document résume les notes de cours prises en classe dans le cours de Mathém
 
 Le chapitre correspondant dans le \emph{Loss Models, 4\up{th} edition} est indiqué entre parenthèse des chapitres. \\
 
-De plus, ce document essaie le plus possible de suivre la numérotation des sections du \emph{Loss Models}. C'est pourquoi il arrive parfois qu'il y ait des sauts de section.
+De plus, ce document essaie le plus possible de suivre la numérotation des sections du \emph{Loss Models}. C'est pourquoi il arrive parfois qu'il y ait des sauts de section. \\
+
+Finalement, il y a une section à la fin des chapitres qui indique les exercices recommandés dans le livre, intitulée \textbf{}
 \end{abstract}
 % --------------
 
@@ -214,6 +216,9 @@ Soit une distribution ayant fonction de densité $f_X(x)$ et fonction de hazard 
 \item Si $h(x) \ \searrow$, \textit{heavy-tailed}
 \item Note : on peut aussi comparer les distributions entre-elles : si une distribution voit son $h_1(x)$ augmenter plus rapidement que l'autre (i.e. $h_2(x)$), alors la deuxième distribution a une aile de distribution plus lourde.
 \end{enumerate}
+
+\section{Exercices recommandés}
+À compléter
 
 
 \chapter{Fréquence et sévérité avec modifications aux contrats (8)}
@@ -512,6 +517,12 @@ Y^L =
 	& = (1+r) \left( \esp{X \wedge \frac{u}{1+r}} - \esp{X \wedge \frac{d}{1+r}}   \right) \\
 \end{align*}
 
+\section{Exercices recommandés}
+À compléter
+
+
+
+
 
 \chapter{Estimation de données complètes (11)}
 \setcounter{section}{1}
@@ -682,6 +693,9 @@ Et on obtient le graphique suivant :
 \end{center}
 \end{exemple}
 
+\section{Exercices recommandés}
+À compléter
+
 
 \chapter{Estimation de données modifiées (12)}
 \section{Point estimation}
@@ -737,6 +751,10 @@ Cet estimateur est une version modifiée de l'estimateur de Nelson-\r{A}alen vu 
 On s'intéresse à l'espérance et la variance de la fonction de survie $S_n$, qui suite une binomiale (i.e. $S_n(x) \sim Bin(n, S(x))$. Si on connaissait $S(x)$, on pourrait facilement déduire l'espérance et la variance avec les formules qu'on connaît. Toutefois, puisqu'on cherche souvent à estimer $S(x)$, il faudra aussi estimer l'espérance et la variance.
 
 \hl{Section à compléter}
+
+
+\section{Exercices recommandés}
+À compléter
 
 
 
@@ -866,6 +884,16 @@ f_X(x)	& =
 \paragraph{Note} Dans un problème, on peut soit demander de calculer la fonction de répartition à un certain point, ou encore nous demander de trouver les coefficients $\alpha_i$ en connaissant les différentes fonctions de répartition et les probabilités rattachées.
 
 
+\section{Exercices recommandés}
+Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce chapitre sont les suivants : 
+\begin{enumerate}[label=\faAngleRight]
+\item 5.1 à 5.6
+\item 5.8 à 5.11
+\item 5.17 à 5.19
+\end{enumerate}
+
+
+
 \chapter{Modèle de perte aggrégée (9)}
 
 \section{Modèle composé (fréquence-sévérité) pour les pertes aggrégées}
@@ -904,13 +932,41 @@ L'espérance et la variance peuvent être obtenues avec les propriétés d'espé
 	& = \esp{X}^2 \variance{N} + \esp{N} \variance{X} \\ \numberthis
 \end{align*}
 
+
+\section{Exercices recommandés}
+Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce chapitre sont les suivants : 
+\begin{enumerate}[label=\faAngleRight]
+\item 9.34 et 9.36
+\end{enumerate}
+
+
+
 \chapter{Frequentist estimation}
+
 
 \section{Méthode des moments}
 
 
+\section{Méthode des percentiles}
 
 
+
+\section{Méthode du maximum de vraisemblance}
+aussi appelé \emph{Maximum log-likelihood estimator (MLE)}. 
+
+
+
+% Dernière section du chapitre
+\section{Exercices recommandés}
+Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce chapitre sont les suivants : 
+\begin{enumerate}[label=\faAngleRight]
+\item Méthode des moments et percentiles : 13.1 à 13.22
+\item \emph{MLE} : 13.30, 13.32, 13.33, 13.37, 13.38 à 13.40
+\item 13.45 à 13.51
+\item 13.54 à 13.57
+\item 13.62 à 13.72
+\item 13.74 
+\end{enumerate}
 
 
 
