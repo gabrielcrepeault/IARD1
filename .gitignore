@@ -1,8 +1,17 @@
-# Fichiers à ignorer du Git Push
-# 13 septembre 2018
+# Fichiers à ignorer des commits sur GitHub
+# Gabriel Crépeault-Cauchon
+# 13 septembre 2018 (mis à jour le 18/11/2018)
 
 *.out
 *.log
 *.toc
 *.aux
 *.synctex.gz
+*.DS_Store
+
+# Fichier d'erreur dans certains cas sur LaTeX
+*.fls
+*.fdb_latexmk
+
+# Fichier de configuration de VS Code
+.vscode/
