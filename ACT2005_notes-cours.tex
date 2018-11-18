@@ -159,6 +159,13 @@ On peut faire le lien entre le déductible et la limite :
 %    E[x^k] = C_k k!
 %\end{equation}
 
+\section{Percentile}
+\label{sec:percentile}
+On définit le $p$\up{e} quantile (\emph{percentile} en anglais) $\pi_p$ comme étant la valeur minimale que $X$ prend tel que $F_X(\pi_p) \geq p$. \\
+
+Il arrive parfois (en contexte où $x$  est discret) que le $p$ percentile demandé tombe dans une \emph{marche}. Il faut alors considérer les bornes de la fonction pour déterminer quelle valeur de $x$ correspond au quantile demandé.
+
+
 \section{Queue de distribution}
 \subsection{Classification selon les moments}
 \begin{enumerate}[label=\faAngleRight]
@@ -525,6 +532,7 @@ Y^L =
 
 
 \chapter{Estimation de données complètes (11)}
+\label{chap:estimation_Fn}
 \setcounter{section}{1}
 % Commence à la section 11.2 dans le Loss Models 4th edition
 
@@ -633,7 +641,7 @@ On peut déterminer la valeur empirique de $F_n(x)$ aux bornes des classes, avec
 \begin{align*}
 F_n(x) = \frac{\sum_{i=1}^{j} n_i}{n}
 \end{align*}
-où $n_i$ est le nombre d'observations qui sont entre $c_{j-1}$ et $c_j$. Toutefois, pour les valeurs entre deux bornes $c_0 < c_1 < ... < c_k$, il faut approximer avec la fonction OGIV ci-dessous : 
+où $n_i$ est le nombre d'observations qui sont entre $c_{j-1}$ et $c_j$. Toutefois, pour les valeurs entre deux bornes $c_0 < c_1 < ... < c_k$, il faut approximer avec la fonction OGIVE ci-dessous : 
 
 \begin{equation}
 \label{eq:repart-OGIVE}
@@ -941,13 +949,45 @@ Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce 
 
 
 
-\chapter{Frequentist estimation}
+\chapter{Frequentist estimation (13)}
 
 
 \section{Méthode des moments}
+On cherche à estimer les paramètres de la distribution de nos données, sachant que la distribution suit une loi quelconque. \\
 
+Si on a $p$ paramètres à estimer, alors il faudra calculer les $p$ premiers moments empiriques de la distribution, soit
+\begin{equation}
+\hat{\mu}_k^\prime = \sum_{i=1}^{n} x_i^k
+\end{equation}
+
+Puis d'utiliser cette quantité empirique pour résoudre le système d'équation à $p$ inconnus tel que $\hat{\mu_k^\prime} = \mu_k^\prime$.
 
 \section{Méthode des percentiles}
+Pour un rappel sur les percentiles, voir la \autoref{sec:percentile}. Cette méthode est appelée en anglais \emph{percentile matching estimate}. \\
+
+Un peu comme la méthode des moments, on utilise une quantité qu'on peut calculer empiriquement, soit la fonction de répartition empirique, pour pouvoir résoudre le système d'équations à $p$ variables tel que
+\[F_n(\hat{\pi}_{g_i}) = g_i \]
+où
+\begin{enumerate}[label=\faAngleRight]
+\item $\hat{\pi}_{g_i} = F_n^{-1}(g_i)$, $i = 1, ... ,p$
+\item $F_n$ : la fonction de répartition empirique\footnote{L'estimation de la fonction de répartition empirique est couvert au \autoref{chap:estimation_Fn}.}
+\item $p$ : nombre de paramètres de la distribution à estimer.
+\end{enumerate}
+
+\subsection{\emph{smoothed empirical estimate}}
+Il arrive parfois que le percentile arrive entre 2 \emph{marche} de la fonction de répartition empirique. Dans cette situation, $\hat{\pi}_{g}$ doit être approximé de façon linéaire avec les statistiques d'ordre : 
+\begin{equation}
+\hat{\pi}_g = (1-h) X_{(j)} + h X_{(j)}
+\end{equation}
+où
+\begin{enumerate}[label=\faAngleRight]
+\item $j = \lfloor (n+1) h \rfloor$ et $h = (n+1) g - j$
+\item $X_{(j)}$ la $j$\up{e} statistique d'ordre de l'échantillon empirique $X$.
+
+\end{enumerate}
+
+
+
 
 
 
