@@ -974,14 +974,14 @@ où
 \item $p$ : nombre de paramètres de la distribution à estimer.
 \end{enumerate}
 
-\subsection{\emph{smoothed empirical estimate}}
+\subsection{Smoothed empirical estimate}
 Il arrive parfois que le percentile arrive entre 2 \emph{marche} de la fonction de répartition empirique. Dans cette situation, $\hat{\pi}_{g}$ doit être approximé de façon linéaire avec les statistiques d'ordre : 
 \begin{equation}
 \hat{\pi}_g = (1-h) X_{(j)} + h X_{(j)}
 \end{equation}
 où
 \begin{enumerate}[label=\faAngleRight]
-\item $j = \lfloor (n+1) h \rfloor$ et $h = (n+1) g - j$
+\item $j = \lfloor (n+1) g \rfloor$ et $h = (n+1) g - j$
 \item $X_{(j)}$ la $j$\up{e} statistique d'ordre de l'échantillon empirique $X$.
 
 \end{enumerate}
