@@ -992,7 +992,61 @@ où
 
 
 \section{Méthode du maximum de vraisemblance}
-aussi appelé \emph{Maximum log-likelihood estimator (MLE)}. 
+\subsection{Données complètes}
+aussi appelé \emph{Maximum log-likelihood estimator (MLE)}. On cherche à estimer le paramètre $\hat{\theta}$ en maximisant la fonction de vraisemblance \footnote{Il arrive parfois que la seule façon de trouver le paramètre qui maximise $L(\theta)$ est en utilisant des méthodes numériques}.
+
+\begin{definition}[Fonction de vraisemblance]
+La fonction de vraisemblance $L(\theta  | x)$ est la probabilité d'obtenir un échantillon $x_1, ..., x_n$ d'une distribution $f_X(x)$ ayant le paramètre $\theta$. Alors,
+\begin{equation}
+\label{eq:fct_vraisemblance}
+L(\theta)	= \prod_{i=1}^{n} f_X(x_i ; \theta)
+\end{equation}
+On peut aussi trouver la fonction de log-vraisemblance $\ell(\theta)$ (qui est souvent plus facile à dériver) : 
+\begin{equation}
+\label{eq:fct_log-vraisemblance}
+\ell(\theta) = \sum_{i=1}^{n} \ln f_X(x_i ; \theta)
+\end{equation}
+\end{definition}
+\paragraph{Estimation du paramètre $\theta$} On détermine l'estimateur du maximum de vraisemblance (\emph{MLE} en anglais)\footnote{L'abbréviation en français est MVE, mais on utilise surtout \emph{MLE} pour Maximum likelihood estimator.} tel qu'on maximise l'\autoref{eq:fct_vraisemblance}. Intuitivement, on va donc trouver le paramètre $\theta$ tel que
+\[\derivee{\theta} L(\theta) = 0\]
+Puisque la fonction de vraisemblance peut parfois être difficile à dériver, on utilise souvent la fonction de log-vraisemblance (\autoref{eq:fct_log-vraisemblance}) : 
+\[\derivee{\theta} \ell(\theta) = 0\]
+\paragraph{Estimation du vecteur de paramètres $\boldsymbol{\theta}$}
+Si on doit estimer plusieurs paramètres pour la fonction $f_X$, on procède de la même façon, en dérivant la fonction de vraisemblance (ou log-vraisemblance) par rapport à chacun des paramètres et en posant ces dérivées égales à 0.
+
+
+
+\subsection{Données groupées}
+Lorsque les données sont groupées, la fonction de vraisemblance $L(\theta)$ est différente. $X \sim Multinomiale(\matr{n}, \matr{p})$. Alors,
+\begin{equation}
+L(\theta) = \prob{n_1, n_2, ..., n_k ; \theta} = \binom{n}{n_1, ..., n_k} p_1^{n_1} ... p_k^{n_k}
+\end{equation}
+Et la fonction de log-vraisemblance (en enlevant la constante combinatoire) est donc
+\begin{align*}
+\label{eq:log-vraisemblance_group}
+\ell(\theta) & = \sum_{i=1}^{k} n_i \ln p_i \\
+	& = \sum_{i=1}^{k} n_i \ln \left( F_X(c_{i} ; \theta) - F_X(c_{i-1} ; \theta) \right) \\\numberthis
+\end{align*}
+Ouin fak \autoref{eq:log-vraisemblance_group}
+
+
+
+\section{Calcul de la variance et intervalle de confiance}
+
+\begin{definition}[Information de Fisher]
+
+\begin{equation}
+I(\theta) = -n \esp{\frac{\partial^2}{\partial \theta^2} \ln f_X(x ; \theta)} = n \esp{\left( \derivee{\theta} \ln f_X(x ; \theta) \right)^2}
+\end{equation}
+Il existe une autre version (plus générale) : 
+\begin{equation}
+I(\theta) = -\esp{\frac{\partial^2}{\partial \theta^2} \ell(\theta)} = \esp{\left( \derivee{\theta} \ell(\theta) \right)^2}
+\end{equation}
+\end{definition}
+
+
+
+
 
 
 
