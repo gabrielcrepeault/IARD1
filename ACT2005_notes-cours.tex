@@ -1012,22 +1012,33 @@ On peut aussi trouver la fonction de log-vraisemblance $\ell(\theta)$ (qui est s
 Puisque la fonction de vraisemblance peut parfois être difficile à dériver, on utilise souvent la fonction de log-vraisemblance (\autoref{eq:fct_log-vraisemblance}) : 
 \[\derivee{\theta} \ell(\theta) = 0\]
 \paragraph{Estimation du vecteur de paramètres $\boldsymbol{\theta}$}
-Si on doit estimer plusieurs paramètres pour la fonction $f_X$, on procède de la même façon, en dérivant la fonction de vraisemblance (ou log-vraisemblance) par rapport à chacun des paramètres et en posant ces dérivées égales à 0.
+Si on doit estimer plusieurs paramètres pour la fonction $f_X$, on procède de la même façon, en dérivant partiellement la fonction de vraisemblance (ou log-vraisemblance) par rapport à chacun des paramètres et en posant ces dérivées égales à 0.
 
 
 
 \subsection{Données groupées}
-Lorsque les données sont groupées, la fonction de vraisemblance $L(\theta)$ est différente. $X \sim Multinomiale(\matr{n}, \matr{p})$. Alors,
+Lorsque les données sont groupées dans les intervalles $c_0 < c_1 < ... < c_k$, la fonction de vraisemblance $L(\theta)$ est différente. $X \sim Multinomiale(\matr{n}, \matr{p})$. Alors,
 \begin{equation}
 L(\theta) = \prob{n_1, n_2, ..., n_k ; \theta} = \binom{n}{n_1, ..., n_k} p_1^{n_1} ... p_k^{n_k}
 \end{equation}
+Dans le contexte de données groupées, on a que $p_j= \prob{X_j \in (c_{j-1}, c_{j})}$. Donc, la fonction de vraisemblance est
+\[L(\theta) =  \prod_{j=1}^{n}  \left( F_X(c_{j} | \theta) - F_X(c_{j-1} | \theta) \right)^{n_j}   \]
 Et la fonction de log-vraisemblance (en enlevant la constante combinatoire) est donc
-\begin{align*}
+\begin{equation}
 \label{eq:log-vraisemblance_group}
-\ell(\theta) & = \sum_{i=1}^{k} n_i \ln p_i \\
-	& = \sum_{i=1}^{k} n_i \ln \left( F_X(c_{i} ; \theta) - F_X(c_{i-1} ; \theta) \right) \\\numberthis
-\end{align*}
-Ouin fak \autoref{eq:log-vraisemblance_group}
+\ell(\theta)  = \sum_{j=1}^{k} n_j \ln \left( F_X(c_{j} ; \theta) - F_X(c_{j-1} ; \theta) \right) \\
+\end{equation}
+
+\subsection{Données censurées}
+Si une donnée est censurée, on l'interprète comme une donnée groupée dont l'intervalle va jusqu'à $\infty$. On remplace $f_X(x_j )$ par $1 - F_X(x_j )$.
+
+\subsection{Données tronquées}
+Si une donnée est tronquée, on a 2 options : 
+\begin{enumerate}
+\item On soustrait de chacune des observations le point de troncation $d$ ; 
+\item \textbf{(Méthode plus souvent utilisée)} : On conditionne pour que les données sous le point de troncation $d$ ne soient pas considérées, i.e. on remplace $f(x_j | \theta)$ par $\frac{f(x_j | \theta)}{1 - F(d)}$. 
+\end{enumerate}
+
 
 
 
