@@ -1176,7 +1176,45 @@ On déduit donc que la distribution \emph{a posteriori} obéit à une loi Gamma 
 & =  \frac{n \theta}{1 + n \theta} \left( \frac{\sum_{i=1}^{n} x_i}{n} \right) + \frac{1}{1 + n \theta} (\alpha \theta) \\
 & = \frac{n \theta}{1 + n \theta} \hat{\lambda}_{MLE} + \frac{1}{1 + n \theta} \underbrace{(\alpha \theta)}_{\text{Moy. distr. \emph{a priori}}} \\
 \end{align*}
+\end{exemple}
 \paragraph{Remarque} On peut donc voir l'estimateur Bayésien comme une moyenne pondérée entre l'estimateur du maximum de vraisemblance et la moyenne de la distribution \emph{a priori}. Lorsque $n \to \infty$, l'estimateur Bayésien sera semblable à l'EMV.
+
+\begin{exemple}[Exemple avec la loi Normale]
+On prend le modèle $Y|\Theta = \frac{\sum_{i=1}^{n} x_i}{n} \sim N \left(\theta, \frac{\sigma^2}{n} \right)$, avec $\sigma^2$ connu. La densité \emph{a priori} obéit aussi à une loi normale, telle que $\Theta \sim N(\theta_0, \sigma^2_0)$, où $\theta_0, \sigma^2_0$ sont connus. On va donc s'attendre à avoir une distribution \emph{a posteriori} qui va suivre une loi normale aussi. Alors, la distribution \emph{a posteriori} $\pi_{\Theta | X}(\theta | x)$ peut être trouvée : 
+\begin{align*}
+\pi_{\Theta | X}(\theta | x) = c(y) e^{\frac{-(y-\theta)^2}{2 (\sigma^2/n)}} e^{\frac{-(\theta - \theta_0)^2}{2(\sigma_0^2}}
+\end{align*}
+On va essayer de jumeler les 2 exposants des $e$, pour retrouver une certaine forme de la loi normale : 
+\begin{align*}
+\frac{(y-\theta)^2}{2 (\sigma^2/n)} + \frac{(\theta - \theta_0)^2}{2(\sigma_0^2}  & = \frac{\sigma_0^2 (y-\theta)^2 + \frac{\sigma^2}{n} (\theta - \theta_0)^2}{2 \frac{\sigma^2}{n} \sigma_0^2} \\
+\end{align*}
+Si on développe les termes séparément : 
+\begin{align*}
+\sigma_0^2 (y - \theta)^2 & = \sigma_0^2 (y^2 + \theta^2 - 2 \theta y) \\
+\end{align*}
+et
+\begin{align*}
+\frac{\sigma^2}{n} (\theta - \theta_0)^2 & = \frac{\sigma^2}{n} (\theta^2 + \theta_0^2 - 2 \cdot \theta \cdot \theta_0) \\
+\end{align*}
+Alors,
+\begin{align*}
+\sigma_0^2 (y - \theta)^2 + \frac{\sigma^2}{n} (\theta - \theta_0)^2 & = \left( \sigma_0^2 + \frac{\sigma^2}{n} \right) \theta^2 - 2 \left( y \sigma_0^2  + \theta_0 \frac{\sigma^2}{n}  \right) \theta
+\end{align*}
+Alors, la distribution \emph{a posteriori} peut être ré-écrite comme
+\begin{align*}
+\pi_{\Theta | X}(\theta | x) & = k(y) \exp \left \{ - \frac{1}{2} \left( \theta^2 - 2 ( \frac{y \sigma_0^2 + \theta_0 \frac{\sigma^2}{n}}{\sigma^2 + \frac{\sigma^2}{n}} \right) \theta /  \frac{\frac{\sigma^2}{n} \sigma_0^2}{\sigma_0^2 + \frac{\sigma^2}{n}}       \right \}
+\end{align*}
+Si on manipule le numérateur, on trouve
+\begin{align*}
+\pi_{\Theta | X}(\theta | x) & = k(y) \exp \left \{ - \frac{1}{2 \gamma} \left( \theta - \frac{y \sigma_0^2 + \theta_0 \frac{\sigma^2}{n}}{\sigma_0^2 + \frac{\sigma-2}{n}} \right)^2   \right \}
+\end{align*}
+Donc
+\[\pi_{\Theta | X}(\theta | x)  \sim N(\mu', \sigma' = \gamma) \]
+où $\mu' = \frac{y \sigma_0^2 + \theta_0 \frac{\sigma^2}{n}}{\sigma_0^2 + \frac{\sigma^2}{n}}$. On peut aussi le ré-écrire (aussi appelé estimateur de crédibilité, sera vu en IARD2) : 
+\begin{align*}
+\hat{\theta}_{BAYES} = \left( \frac{\sigma_0^2}{\sigma_0^2 + \frac{\sigma^2}{n}} \right) \bar{x} + \left( \frac{\sigma^2 / n}{\sigma_0^2 + \frac{\sigma^2}{n}} \right) \theta_0
+\end{align*}
+$\oldfrac{1}{2}$
 \end{exemple}
 
 
