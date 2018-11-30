@@ -54,6 +54,26 @@ De plus, on a
 et
 \[\Gamma(n) = (n-1)!\]
 
+\section{Fonction de survie}
+On a
+\begin{align*}
+\esp{X} & = \int_{-\infty}^{\infty} x f_X(x) dx \\
+	& = \int_{-\infty}^{\infty} S_X(x) dx \\
+\end{align*}
+De plus,
+\begin{align*}
+f_X(x) = - \derivee{x} S_X(x)
+\end{align*}
+\begin{proof}
+\begin{align*}
+f_X(x)	&  =-  \derivee{x} S_X(x)  \\
+	&=-  \derivee{x} (1  - F_X(x))  \\
+	& = - (- f_X(x)) \\
+	& = f_X(x) \\
+\end{align*}
+\end{proof}
+
+
 
 
 
@@ -993,10 +1013,10 @@ où
 
 \section{Méthode du maximum de vraisemblance}
 \subsection{Données complètes}
-aussi appelé \emph{Maximum log-likelihood estimator (MLE)}. On cherche à estimer le paramètre $\hat{\theta}$ en maximisant la fonction de vraisemblance \footnote{Il arrive parfois que la seule façon de trouver le paramètre qui maximise $L(\theta)$ est en utilisant des méthodes numériques}.
+aussi appelé \emph{Maximum log-likelihood estimator (MLE)}. On cherche à estimer le paramètre $\hat{\theta}$ en maximisant la fonction de vraisemblance \footnote{Il arrive parfois que la seule façon de trouver le paramètre qui maximise $L(\theta)$ est en utilisant des \href{https://gitlab.com/vigou3/methodes-numeriques-en-actuariat}{méthodes numériques}}.
 
 \begin{definition}[Fonction de vraisemblance]
-La fonction de vraisemblance $L(\theta  | x)$ est la probabilité d'obtenir un échantillon $x_1, ..., x_n$ d'une distribution $f_X(x)$ ayant le paramètre $\theta$. Alors,
+La fonction de vraisemblance $L(\theta  | x)$ est la probabilité d'obtenir un échantillon $x_1, ..., x_n$ d'une distribution $f_X(x)$ ayant le vecteur de paramètres ${\theta}$. Alors,
 \begin{equation}
 \label{eq:fct_vraisemblance}
 L(\theta)	= \prod_{i=1}^{n} f_X(x_i ; \theta)
@@ -1076,6 +1096,95 @@ Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce 
 
 
 
+\chapter{Estimation Bayésienne (15)}
+\section{Définition de l'estimateur Bayésien}
+\begin{definition}[Distribution \emph{a priori}]
+Soit un paramètre $\theta$ d'une distribution quelconque. Afin de réaliser une estimation Bayésienne, on connaît \emph{a priori} la distribution que prend le paramètre $\theta$, qu'on dénote par $\pi(\theta)$. \\
+
+Alors, notre distribution des pertes est conditionné par rapport à la valeur que $\theta$ prend (i.e. $f_{X|\Theta}$).
+\end{definition}
+
+\begin{definition}[Distribution \emph{a posteriori}]
+La distribution \emph{a posteriori} nous permet de savoir avec quelle probabilité non-nulle notre paramètre $\theta$ peut prendre une certaine valeur, sachant qu'on a observé certains $x$, qu'on dénote comme $\pi_{\Theta | X}(\theta | x)$ : 
+\begin{equation}
+\label{eq:dist_posteriori}
+\pi_{\Theta | X}(\theta | x) = \frac{f_{\Theta, X}(\theta, x)}{f_{X}(x)} = \frac{f_{X|\Theta}(x | \theta) \pi(\theta)}{\int f_{X|\Theta}(x | \theta) \pi(\theta) d \theta} 
+\end{equation}
+L'idée est de remplacer les différentes distributions dans l'\autoref{eq:dist_posteriori}, et en déduire une distribution avec une paramétrisation différente\footnote{Souvent, la distribution \emph{a posteriori} aura la même distribution que celle \emph{a priori}, mais avec des paramètres différents.}.
+\end{definition}
+
+\paragraph{L'estimateur Bayésien} L'estimateur Bayésien est défini comme l'espérance du paramètre $\theta$, sachant la distribution de $X$. En d'autres mots, on veut l'espérance de la distribution \emph{a posteriori} : 
+\begin{equation}
+\label{eq:estimateur_bayes}
+\hat{\theta}_{BAYES} = \esp{\Theta | X}
+\end{equation}
+
+\paragraph{Propriétés de l'estimateur} Voici quelques propriétés importantes de l'estimateur : 
+\begin{enumerate}[label = \faAngleRight]
+\item $\hat{\theta}_{BAYES}$ est biaisé (comparativement à l'estimateur MLE qui est non-biaisé) ;
+\item Par contre, l'estimateur Bayésien a une plus petite variance que l'estimateur MLE. On sacrifie donc le Biais pour diminuer la variance de l'estimateur ;
+\item \textbf{Remarque} : Si $n$ est grand,  il peut être préférable d'utiliser l'estimateur MLE.
+\end{enumerate}
+
+\subsection{Estimation par simulation}
+Une fois qu'on a développé et trouver la distribution \emph{a posteriori} de$\Theta | X$ (\autoref{eq:dist_posteriori}), alors on peut facilement simuler l'estimateur Bayésien :
+\begin{enumerate}
+\item 
+\end{enumerate}
+
+
+\begin{exemple}[Exemple avec la Loi de Poisson]
+Soit $X | \Lambda \sim Pois(\Lambda)$ et $\Lambda \sim \Gamma(\alpha, \theta)$. Alors, on a la distribution \emph{a priori} suivante : 
+\[\Lambda \sim \pi(\lambda) = \frac{\lambda^{\alpha -1}}{\Gamma(\alpha) \theta^\alpha} e^{-\lambda / \theta} \] 
+Évidemment, on va s'attendre à ce que la distribution \emph{a posteriori} obéisse à une loi Gamma aussi. On a (avec $c(x)$ une constante) : 
+\begin{align*}
+\pi_{\Lambda | X}( \lambda | x) &  =c(x) \frac{\lambda^{\alpha -1} e^{-\lambda / \theta}}{\Gamma(\alpha) \theta^{\alpha}} \frac{\lambda^{\alpha} e^{-\lambda}}{x!} \\
+& = k(x) \lambda^{x + \alpha - 1} e^{-\lambda\left( \frac{1}{\theta} + \lambda \right)} \\
+\end{align*}
+avec $c(x)$ et $k(x)$ des constantes uniquement fonction de $x$. \\
+
+On trouve donc que $\pi_{\Lambda | X}( \lambda | x)  \sim \Gamma\left( \alpha' = x + \alpha, \beta' = \left(\frac{1}{\theta} + 1 \right)^{-1} \right)$
+
+Puisque l'estimateur Bayésien est l'espérance de la distribution \emph{a posteriori}, on a
+\begin{align*}
+\hat{\lambda}_{BAYES} & = \esp{\Lambda | X} \\
+& = \int \lambda \cdot \pi_{\Lambda | X}( \lambda | x) d \lambda \\
+& = \alpha' \beta' \\
+& = (x + \alpha) \left( \frac{\theta}{1 + \theta} \right) \\
+\end{align*}
+\end{exemple}
+
+\begin{exemple}[Cas plus général ...]
+On a le modèle suivant pour $X$, tel que
+\begin{align*}
+f_{X_1, ..., X_n | \Lambda}(x_1, ..., x_n | \lambda) & = \frac{\lambda^{x_1} e^{-\lambda}}{x_1 ! } ... \frac{\lambda^{x_n} e^{-\lambda}}{x_n !} \\
+\end{align*}
+Ainsi que la distriution \emph{a priori} telle que
+\begin{align*}
+\Lambda \sim \pi(\lambda) = \frac{\lambda^{\alpha -1}}{\Gamma(\alpha) \theta^{\alpha}} e^{-\lambda / \theta} \\
+\end{align*}
+Alors, la distribution \emph{a posteriori} est donc
+\begin{align*}
+f_{\Lambda | X}(\lambda | x)	& = c(x) \frac{\lambda^{\alpha-1}}{\Gamma(\alpha) \theta^{\alpha}} e^{-\lambda / \theta} \cdot \frac{\lambda^{x_1} e^{-\lambda}}{x_1 !} ... \frac{\lambda^{x_n} e^{-\lambda}}{x_n !} \\
+& = k(x) \lambda^{\sum x_i + \alpha - 1} e^{-\lambda/ \theta} e^{-n \lambda} \\
+& = k(x) \lambda^{\sum x_i + \alpha - 1} e^{-\lambda \left( \frac{1}{\theta} + n \right)} \\
+\end{align*}
+On déduit donc que la distribution \emph{a posteriori} obéit à une loi Gamma de paramètres $\alpha' = \sum x_1 + \alpha$ et $\beta' =\left( \frac{1}{\theta} + n \right)^{-1} = \frac{\theta}{1 + n \theta}$. Alors, on déduit facilement l'estimateur Bayésien : 
+\begin{align*}
+\hat{\lambda}_{BAYES} & = \alpha' \beta' \\
+& =\frac{ \theta \left( \sum_{i=1}^{n} x_i + \alpha \right)}{1 + n \theta} \\
+& =  \frac{n \theta}{1 + n \theta} \left( \frac{\sum_{i=1}^{n} x_i}{n} \right) + \frac{1}{1 + n \theta} (\alpha \theta) \\
+& = \frac{n \theta}{1 + n \theta} \hat{\lambda}_{MLE} + \frac{1}{1 + n \theta} \underbrace{(\alpha \theta)}_{\text{Moy. distr. \emph{a priori}}} \\
+\end{align*}
+\paragraph{Remarque} On peut donc voir l'estimateur Bayésien comme une moyenne pondérée entre l'estimateur du maximum de vraisemblance et la moyenne de la distribution \emph{a priori}. Lorsque $n \to \infty$, l'estimateur Bayésien sera semblable à l'EMV.
+\end{exemple}
+
+
+
+
+
+\section{Intervalle de crédibilité}
+L'intervalle de crédibilité\footnote{L'utilisation du terme crédibilité ici n'a aucun rapport avec la crédibilité utilisée dans le chapitre 17 du Loss Models.} est l'équivalent d'un intervalle de confiance qu'on utilise pour toutes les autres formes d'estimation vues auparavant.
 
 
 
