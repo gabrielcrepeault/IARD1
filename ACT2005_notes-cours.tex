@@ -1029,14 +1029,12 @@ On peut aussi trouver la fonction de log-vraisemblance $\ell(\theta)$ (qui est s
 \ell(\theta) = \sum_{i=1}^{n} \ln f_X(x_i ; \theta)
 \end{equation}
 \end{definition}
-\paragraph{Estimation du paramètre $\theta$} On détermine l'estimateur du maximum de vraisemblance (\emph{MLE} en anglais)\footnote{L'abbréviation en français est MVE, mais on utilise surtout \emph{MLE} pour Maximum likelihood estimator.} tel qu'on maximise l'\autoref{eq:fct_vraisemblance}. Intuitivement, on va donc trouver le paramètre $\theta$ tel que
+\paragraph{Estimation du paramètre $\theta$} On détermine l'estimateur du maximum de vraisemblance (\emph{MLE} en anglais)\footnote{L'abbréviation en français est EMV, mais on utilise surtout \emph{MLE} pour Maximum likelihood estimator.} tel qu'on maximise l'\autoref{eq:fct_vraisemblance}. Intuitivement, on va donc trouver le paramètre $\theta$ tel que
 \[\derivee{\theta} L(\theta) = 0\]
 Puisque la fonction de vraisemblance peut parfois être difficile à dériver, on utilise souvent la fonction de log-vraisemblance (\autoref{eq:fct_log-vraisemblance}) : 
 \[\derivee{\theta} \ell(\theta) = 0\]
 \paragraph{Estimation du vecteur de paramètres $\boldsymbol{\theta}$}
-Si on doit estimer plusieurs paramètres pour la fonction $f_X$, on procède de la même façon, en dérivant partiellement la fonction de vraisemblance (ou log-vraisemblance) par rapport à chacun des paramètres et en posant ces dérivées égales à 0.
-
-
+Si on doit estimer plusieurs paramètres $\theta_i$ pour la fonction $f_X$, on procède de la même façon, en dérivant partiellement la fonction de vraisemblance (ou log-vraisemblance) par rapport à chacun des paramètres $\theta_i$ et en posant ces dérivées égales à 0.
 
 \subsection{Données groupées}
 Lorsque les données sont groupées dans les intervalles $c_0 < c_1 < ... < c_k$, la fonction de vraisemblance $L(\theta)$ est différente. $X \sim Multinomiale(\matr{n}, \matr{p})$. Alors,
@@ -1065,29 +1063,63 @@ Si une donnée est tronquée, on a 2 options :
 
 
 \section{Calcul de la variance et intervalle de confiance}
+L'explication donnée ici est reprise de l'ouvrage \emph{Modélisation des sinistres avec R}\footnote{\href{https://libre.act.ulaval.ca/fileadmin/Portail_libre/ACT-2005/Notes\%20de\%20cours/distributions_sinistres.pdf}{Ouvrage de Vincent Goulet}, section 5.5 (page 203 à 212)}.  \\
+
+Lorsque $n \to \infty$, on sait que le vecteur de paramètres $\bm{\hat{\theta}} \sim N(\theta, \mathrm{Var}(\bm{\hat{\theta}}))$, avec $\mathrm{Var}(\bm{\hat{\theta}}) = I(\bm{\theta})^{-1}$.
 
 \begin{definition}[Information de Fisher]
-
+La matrice d'information de Fisher est définie par
 \begin{equation}
 I(\theta) = -n \esp{\frac{\partial^2}{\partial \theta^2} \ln f_X(x ; \theta)} = n \esp{\left( \derivee{\theta} \ln f_X(x ; \theta) \right)^2}
 \end{equation}
-Il existe une autre version (plus générale) : 
+La première version étant seulement applicable dans le cas où toutes les variables et observations sont \emph{iid}, on utilise plus souvent la version généralisée : 
 \begin{equation}
 I(\theta) = -\esp{\frac{\partial^2}{\partial \theta^2} \ell(\theta)} = \esp{\left( \derivee{\theta} \ell(\theta) \right)^2}
 \end{equation}
 \end{definition}
 
-On peut estimer la variance des estimateurs avec 
+Donc, on peut calculer un intervalle de confiance (bilatéral) au seuil $1-\alpha$ autour de $\theta$ : 
+\begin{align*}
+\prob{-z_{\alpha/2} < \frac{\hat{\theta} - \theta}{\sqrt{\mathrm{Var}(\hat{\theta})}}  < z_{ \alpha/2} } & = 1 - \alpha \\
+\prob{\hat{\theta} - z_{\alpha/2} \sqrt{\mathrm{Var}(\hat{\theta})}, \hat{\theta} + z_{\alpha/2} \sqrt{\mathrm{Var}(\hat{\theta})}} & = 1 - \alpha \\
+\end{align*}
+D'où l'IC au seuil $1 - \alpha$ est
 \begin{equation}
-\hat{\mathrm{Var}}(\hat{\theta}) = I(\hat{\theta})^{-1}
+\theta \in \Big [   \hat{\theta} \pm z_{\alpha/2} \sqrt{\mathrm{Var}(\hat{\theta})} \Big ]
 \end{equation}
 
 
+
+
+
+
 \subsection{Méthode delta}
-On peut approximer la variance d'une fonction $g(\alpha, \theta)$ avec la formule suivante : 
+Dans certains cas, on désire approximer une autre quantité que le paramètre lui-même, qui est en fait une transformation $h(\theta)$ de ce dernier. On doit utiliser la méthode Delta, qui fait une approximation de Taylor de premier ordre sur la fonction $h(\theta)$. Alors, on a que
 \begin{align*}
-\mathrm{Var}(g(\alpha, \theta)) & = \variance{\alpha} \left( \derivee{\alpha} g(\alpha, \theta) \right)^2 + \variance{\theta} \left( \derivee{\theta} g(\alpha, \theta ) \right)^2  \\
-& + 2 \mathrm{Cov}(\alpha, \theta) \derivee{\alpha} g(\alpha, \theta) \derivee{\theta} g(\alpha, \theta) \\ \numberthis
+h(\hat{\theta)} \approx h(\theta) + \derivee{\theta} h(\theta) (\hat{\theta} - \theta)
+\end{align*}
+On a que
+\begin{align*}
+\esp{h(\hat{\theta})} = h(\hat{\theta})
+\end{align*}
+et
+\begin{align*}
+\variance{\hat{\theta}}	& = \variance{h(\theta) +   \derivee{\theta} h(\theta) (\hat{\theta} - \theta)} \\
+& = \left( \derivee{\theta} h(\theta) \right)^2 \variance{\hat{\theta}} \\
+\end{align*}
+Dans un contexte multivarié (où il faut estimer plus d'un paramètre), on a
+\begin{align*}
+\variance{h(\hat{\theta})}	& = \bm{h}^{\top} I(\theta)^{-1} \bm{h}
+\end{align*}
+où $\bm{h}$ est le vecteur des dérivées partielle de $h(\theta)$ : 
+\begin{align*}
+\bm{h}	& = 
+\begin{bmatrix}
+\derivee{\theta_1} h(\theta) \\
+\derivee{\theta_2} h(\theta) \\
+... \\
+\derivee{\theta_k} h(\theta) \\
+\end{bmatrix}
 \end{align*}
 
 
@@ -1231,12 +1263,6 @@ où $\mu' = \frac{y \sigma_0^2 + \theta_0 \frac{\sigma^2}{n}}{\sigma_0^2 + \frac
 \end{align*}
 \end{exemple}
 
-
-
-
-% Pas vu en classe ... à valider si dans le syllabus pour l'exam final
-%\section{Intervalle de crédibilité}
-%L'intervalle de crédibilité\footnote{L'utilisation du terme crédibilité ici n'a aucun rapport avec la crédibilité utilisée dans le chapitre 17 du Loss Models.} est l'équivalent d'un intervalle de confiance qu'on utilise pour toutes les autres formes d'estimation vues auparavant.
 
 
 \section{Exercices recommandés}
