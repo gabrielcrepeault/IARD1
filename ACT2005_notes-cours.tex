@@ -1077,6 +1077,18 @@ I(\theta) = -\esp{\frac{\partial^2}{\partial \theta^2} \ell(\theta)} = \esp{\lef
 \end{equation}
 \end{definition}
 
+On peut estimer la variance des estimateurs avec 
+\begin{equation}
+\hat{\mathrm{Var}}(\hat{\theta}) = I(\hat{\theta})^{-1}
+\end{equation}
+
+
+\subsection{Méthode delta}
+On peut approximer la variance d'une fonction $g(\alpha, \theta)$ avec la formule suivante : 
+\begin{align*}
+\mathrm{Var}(g(\alpha, \theta)) & = \variance{\alpha} \left( \derivee{\alpha} g(\alpha, \theta) \right)^2 + \variance{\theta} \left( \derivee{\theta} g(\alpha, \theta ) \right)^2  \\
+& + 2 \mathrm{Cov}(\alpha, \theta) \derivee{\alpha} g(\alpha, \theta) \derivee{\theta} g(\alpha, \theta) \\ \numberthis
+\end{align*}
 
 
 
@@ -1092,6 +1104,9 @@ Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce 
 \item Variance et intervalle de confiance : 13.62 à 13.72
 \item Non-normal confidence interval : 13.74 
 \end{enumerate}
+
+
+
 
 
 
