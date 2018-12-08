@@ -1065,7 +1065,7 @@ Si une donnée est tronquée, on a 2 options :
 \section{Calcul de la variance et intervalle de confiance}
 L'explication donnée ici est reprise de l'ouvrage \emph{Modélisation des sinistres avec R}\footnote{\href{https://libre.act.ulaval.ca/fileadmin/Portail_libre/ACT-2005/Notes\%20de\%20cours/distributions_sinistres.pdf}{Ouvrage de Vincent Goulet}, section 5.5 (page 203 à 212)}.  \\
 
-Lorsque $n \to \infty$, on sait que le vecteur de paramètres $\bm{\hat{\theta}} \sim N(\theta, \mathrm{Var}(\bm{\hat{\theta}}))$, avec $\mathrm{Var}(\bm{\hat{\theta}}) = I(\bm{\theta})^{-1}$.
+Lorsque $n \to \infty$, on sait que le vecteur de paramètres $\bm{\hat{\theta}} \sim N(\theta, \mathrm{Var}(\bm{\hat{\theta}}))$, avec $\mathrm{Var}(\bm{\hat{\theta}}) = I(\bm{\theta})^{-1}$\footnote{Pour un rappel sur les matrices inverses, voir l'annexe \ref{annexe:algebre-lineaire}.}.
 
 \begin{definition}[Information de Fisher]
 La matrice d'information de Fisher est définie par
@@ -1076,6 +1076,12 @@ La première version étant seulement applicable dans le cas où toutes les vari
 \begin{equation}
 I(\theta) = -\esp{\frac{\partial^2}{\partial \theta^2} \ell(\theta)} = \esp{\left( \derivee{\theta} \ell(\theta) \right)^2}
 \end{equation}
+Il arrive qu'on remplace l'espérance par \emph{l'observation observée} dans les équations ci-dessus, lorsqu'elle est trop compliquée à calculer. On définit \emph{l'information observée} telle que
+\begin{equation}
+\hat{I}(\hat{\theta}) = \sum_{i=1}^{n} \left( \derivee{\theta} \ln f(x_i ; \theta) \eval_{\theta = \hat{\theta}} \right)^2 = - \sum_{i=1}^{n}  \frac{\partial^2}{\partial \theta^2} \ln f(x_i ; \theta) \eval_{\theta = \hat{\theta}}
+\end{equation}
+
+
 \end{definition}
 
 Donc, on peut calculer un intervalle de confiance (bilatéral) au seuil $1-\alpha$ autour de $\theta$ : 
@@ -1122,6 +1128,99 @@ où $\bm{h}$ est le vecteur des dérivées partielle de $h(\theta)$ :
 \end{bmatrix}
 \end{align*}
 
+\section{Likelihood Ratio Test (LRT)}
+Le test du rapport de vraisemblance (\emph{Likelihood ratio test}) permet de valider si la fonction de vraisemblance d'un modèle avec paramètres \emph{contraints} est proche de la fonction de vraisemblance maximisée lorsqu'il n'y a aucune contrainte sur les paramètres. Ce test a plusieurs applications, notamment ici et dans l'ajustement de modèles linéaires généralisés. On mesure le tout avec le ratio suivant : 
+\begin{align*}
+\lambda = \frac{L(\hat{\theta}_0)}{L(\hat{\theta})}
+\end{align*}
+où
+\begin{enumerate}[label=\faAngleRight]
+\item $L(\theta_0)$ représente la fonction de vraisemblance du modèle avec paramètres contraints ;
+\item $\ell(\theta)$ représente la fonction de vraisemblance pour le modèle complet.
+\end{enumerate}
+
+On peut prouver que
+\begin{equation}
+\label{eq:lrt_general}
+-2 \ln \lambda  \sim \chi_{dl_1 - dl_0}^2
+\end{equation}
+
+où
+\begin{enumerate}[label=\faAngleRight]
+\item $dl_1$ représente le nombre de degrés de libertés du modèle complet (i.e. le nombre de paramètres qu'on peut modifier, qui ne sont pas fixés)
+\item $dl_0$ le nombre de paramètres non fixés du modèle avec paramètres contraints à tester
+
+\end{enumerate}
+
+où  et .  \\
+
+Dans le contexte d'estimation de paramètres, on aura le modèle complet  qui correpond en fait 
+
+Souvent, l'\autoref{eq:lrt_general} est plutôt présentée comme
+\begin{equation}
+\label{eq:lrt_appliquée}
+2 \left( \ell(\theta) - \ell(\theta_0) \right) \sim \chi_{dl_1 - dl_0}^2
+\end{equation}
+
+\paragraph{Le test LRT} le ratio $\lambda$ sera toujours $\leq 1$, car le modèle avec paramètres estimés ne peut pas estimer parfaitement la distribution. Toutefois, on veut que la différence entre la logvraisemblance de la distribution ($\ell(\theta)$) et celle du modèle avec paramètres estimés ($\ell(\theta_0)$) ne soit pas significativement trop élevée\footnote{Autrement dit, on va rejeter $H_0$ que le modèle avec les paramètres estimés est adéquat si la statistique $\lambda$ dépasse le quantile $\chi^2$.}, i.e.
+\begin{equation}
+\label{eq:lrt_acceptation}
+2 \left( \ell(\theta) - \ell(\theta_0) \right) \leq  \chi_{dl_1 - dl_0, 1-\alpha}^2
+\end{equation}
+
+
+\paragraph{Construction d'un intervalle de confiance} Comme n'importe quel test d'hypothèse, il est possible avec le LRT de construire un intervalle de confiance autour de nos paramètres estimés en \emph{inversant} le test. En effet, $\hat{\theta}_0$ doit être le paramètre qui respecte l'\autoref{eq:lrt_acceptation} à un seuil $1 - \alpha$.
+
+\begin{exemple}[Exemple avec Q13.57 du Loss Models]
+\begin{center}
+\includegraphics[scale=0.3]{src/LM-Q13-57.png}
+\end{center}
+On sait que $\hat{\alpha} = 2,848$ et $\hat{\theta} = 100$. \\
+Trouver l'intervalle de confiance à 95\% en inversant le test du ratio de vraisemblance (LRT).
+\tcblower %% RÉPONSE
+\begin{enumerate}[label=(\arabic*)]
+\item On peut trouver que la fonction de densité est
+\begin{align*}
+f(x ; \alpha)	& = \derivee{\alpha} F(x ; \alpha) \\
+& = \derivee{\alpha} \left( 1 - \left( \frac{100}{x} \right)^\alpha \right) \\
+& = \frac{\alpha 100^\alpha}{x^{\alpha+1}} \\
+\end{align*}
+
+\item Les fonctions de vraisemblance $L$ et log-vraisemblance $\ell$ sont, respectivement
+\begin{align*}
+L(\alpha)	& = \prod_{i=1}^{20} f(x_i ; \alpha) \\
+& = \prod_{i=1}^{20} \frac{\alpha 100^\alpha}{x+i^{\alpha+1}}  \\
+\end{align*}
+et 
+\begin{align*}
+\ell(\alpha)	& = \ln L(\alpha) \\
+& = \sum_{i=1}^{20} \ln (\alpha) + \alpha \ln (100) - (\alpha+1) \ln (x_i) \\
+& = 20 \ln (\alpha) + 20 \alpha  \ln (100) - (\alpha + 1) \sum_{i=1}^{20} \ln (x_i) \\
+\shortintertext{Avec la fonction \texttt{DATA} de la calculatrice TI-30XS, on peut facilement calculer le terme $\sum_{i=1}^{20} \ln x_i = 99,125$. En remplaçant $\alpha$ par $\hat{\alpha} = 2,848$, on obtient donc} \\
+\ell(\alpha) & = - 98,190166 \\
+\end{align*}
+
+\item On peut trouver $\hat{\alpha}_0$ qui résoud
+\begin{align*}
+2 (\ell(\hat{\alpha}) - \ell(\hat{\alpha}_0)) & \leq \chi_{1, 0.95}^2 \\
+2 (-98,190166 - \big( 20 \ln (\hat{\alpha}_0) + & \\ 
+20 \hat{\alpha}_0  \ln (100) - (\hat{\alpha}_0 + 1) 99,125 \Big) & \leq 3,841 \\
+-196,38033 - 40 \ln \hat{\alpha}_0 - 40 \hat{\alpha}_0 \ln 100 + 198,25 (\hat{\alpha}_0 + 1) &  \leq 3,841\\
+-200,2213- 40 \ln \hat{\alpha}_0 - 40 \hat{\alpha}_0 \ln 100 + 198,25 (\hat{\alpha}_0 + 1) &  \leq 0 \\
+\end{align*}
+Avec la fonction \texttt{TABLE} de la calculatrice TI-30XS, on peut entrer cette fonction, et tester pour des valeurs de $\hat{\alpha}_0$ jusqu'à résolution. On doit obtenir une borne $L < \hat{\alpha}$ et une borne $U > \hat{\alpha}$.
+
+\item Graphiquement,
+\begin{center}
+\includegraphics[scale=0.1]{Figures/Q13-57_visualisation.png}
+\end{center}
+
+\item Alors,
+\begin{align*}
+\alpha \in \left[ 1,77 ; 4,28 \right]
+\end{align*}
+\end{enumerate}
+\end{exemple}
 
 
 
@@ -1136,6 +1235,17 @@ Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce 
 \item Variance et intervalle de confiance : 13.62 à 13.72
 \item Non-normal confidence interval : 13.74 
 \end{enumerate}
+
+
+
+
+
+\chapter{Sélection de modèles (16)}
+Ce chapitre a été vu avant le chapitre 15 dans le cours
+
+
+\section{Exercices recommandés}
+16.4,16.5,16.10 à 16.15,16.23,16.24
 
 
 
@@ -1308,6 +1418,47 @@ Voici les jeux de données qui sont utilisés dans le Loss Models, qui sont cons
 \begin{center}
 \includegraphics[scale=0.5]{src/Data-Set-D2.png}
 \end{center}
+
+
+\chapter{Rappels mathématiques}
+\section{Algèbre linéaire}
+\label{annexe:algebre-lineaire}
+Soit la matrice $\bm{A}$, telle que
+\begin{align*}
+\bm{A}	& = 
+\begin{bmatrix}
+a	& b \\
+c	& d \\
+\end{bmatrix}
+\end{align*}
+\paragraph{Matrice transposée} la matrice transposée est définie par $\bm{A}^\top$, telle que
+\begin{align*}
+\bm{A}^{\top} & = 
+\begin{bmatrix}
+a	& -c \\
+-b	& d \\
+\end{bmatrix}
+\end{align*}
+
+\paragraph{Déterminant d'une matrice} On peut calculer le déterminant $\det(\bm{A})$ de la matrice $\bm{A}$ tel que
+\begin{align*}
+\det(\bm{A})	  = 
+\begin{vmatrix}
+a	& b \\
+c	& d \\
+\end{vmatrix}
+= ad - bc
+\end{align*}
+
+\paragraph{Inverse d'une matrice} L'équivalent de l'opération $\frac{1}{\bm{A}}$ en algèbre linéaire est de calculer la matrice inverse de $\bm{A}^{-1}$, telle que
+\begin{align*}
+\bm{A}^{-1}	& = \frac{1}{\det(\bm{A})}
+\begin{bmatrix}
+a	& -c \\
+-b	& d \\
+\end{bmatrix}
+\end{align*}
+où on multiple par la matrice adjointe de $\bm{A}$. Il faut normalement calculer les cofacteurs, mais le cas à 2 dimensions est un cas simplifié.
 
 
 
