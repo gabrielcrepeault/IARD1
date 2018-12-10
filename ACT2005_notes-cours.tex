@@ -1242,19 +1242,54 @@ Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce 
 
 \chapter{Sélection de modèles (16)}
 \section{Introduction}
-Il existe plusieurs tests (graphiques, tests d'hypothèses, etc.) pour valider si un modèle est adéquat. Les 2 tests vus dans le cadre du cours sont le 
-
-Souvent, certaines valeurs de ces tests peuvent aussi être utilisé pour comparer différents modèles entre-eux. 
+Il existe plusieurs tests (graphiques, tests d'hypothèses, etc.) pour valider si un modèle est adéquat. Les 2 tests vus dans le cadre du cours sont le \emph{Goodness-of-fit} et le \emph{Likelihood ratio test}. Souvent, certaines valeurs de ces tests peuvent aussi être utilisées pour comparer différents modèles entre-eux. 
 
 \section{\emph{Goodness-of-fit} Chi-Square test}
 \label{sec:goodness-of-fit}
+Avec le test \emph{Goodness-of-fit}, on cherche à valider que les \emph{prédictions} du modèle ne sont pas trop différentes des valeurs empiriques observées. On valide le tout avec une mesure très similaire à l'erreur quadratique, dénotée $X^2$ : 
+\begin{align*}
+X^2 = \frac{\sum_{i=1}^{k} n(\hat{p}_i - p_{ni})^2 }{\hat{p}_i}
+\end{align*}
+où
+\begin{enumerate}[label=\faAngleRight]
+\item $\hat{p}_i$ est la probabilité (selon le modèle) d'observer une valeur dans la $i$\up{e} classe ;
+\item $p_{ni}$ est la probabilité empirique observée d'observations dans la $i$\up{e} classe ;
+\item $n$ est le nombre d'observations.
+\end{enumerate}
+Toutefois, le \emph{Loss Models} utilise toujours la formule suivante pour les exercices :
+\begin{equation}
+X^2 = \frac{\sum_{j=1}^{k}(E_j - O_j)^2 }{E_j}
+\end{equation}
+où $E_j = n \hat{p}_i$ est le nombre de valeurs qu'on s'attend à avoir dans la $i$\up{e} classe et $O_j = n p_{ni}$ le nombre d'observations dans la $i$\up{e} classe. \\
+
+De plus, on peut prouver que
+\[X^2 \sim \chi_{k-p-1}^2\]
+où $k$ est le nombre de classes (on généralise pour le cas où les données seraient groupés)et $p$ le nombre de paramètres qui varient dans le modèle. Formellement, le test d'hypothèse est : 
+\begin{description}
+\item[$H_0$ : ] $X^2 \leq  \chi_{k-p-1}^2$
+\item[$H_1$ : ] $X^2 > \chi_{k-p-1}^2$
+\end{description}
+
 
 
 \section{\emph{Likelihood Ratio Test} (LRT)}
 \label{sec:likelihood-ratio-test}
+En utilisant la statistique du Chi-carré, on cherche à valider que la différence entre la fonction de log-vraisemblance du modèle complet versus le modèle proposé n'est pas significativement trop élevée, sans quoi on devra rejeter $H_0$, et alors le modèle avec contraintes ne sera pas une bonne simplification du modèle complet. On teste la \emph{significativité} avec la statistique $T$ telle que
+\begin{equation}
+T = 2 \left( L_1 - L_0 \right) \sim \chi_{dl = k_1 - k_0}^{2}
+\end{equation}
+où $L_1  = \ell(\theta_{(H_1)})$ et $L_0 = \ell(\theta_{(H_0)})$, $k_1$ est le nombre de paramètres \emph{libres} (i.e. qu'on peut modifier) du modèle complet et $k_0$ le nombre de paramètres libres du modèle avec contraintes.
 
 
-
+\section{Critères de sélection d'un modèle}
+L'expérience compte pour beaucoup dans la sélection du bon modèle. Il y a toutefois quelques critères et statistiques qu'on peut analyser et comparer entre les modèles pour faire certains choix : on va préférer un modèle avec
+\begin{enumerate}
+\item la plus \textbf{faible valeur} pour le test \textbf{Kolmogorov-Smirnov} ; 
+\item  la plus \textbf{faible valeur} pour le test \textbf{Anderson-Darling} ;
+\item  la plus \textbf{faible valeur} pour le test \textbf{Goodness-of-fit} ;
+\item la plus \textbf{haute valeur} pour la \textbf{\emph{p-value} du test Goodness-of-fit} ; 
+\item la plus \textbf{haute valeur} pour la \textbf{fonction de vraisemblance à son maximum}.
+\end{enumerate}
 
 
 
