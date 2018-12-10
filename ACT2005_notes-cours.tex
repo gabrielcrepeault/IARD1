@@ -1129,7 +1129,7 @@ où $\bm{h}$ est le vecteur des dérivées partielle de $h(\theta)$ :
 \end{align*}
 
 \section{Likelihood Ratio Test (LRT)}
-Le test du rapport de vraisemblance (\emph{Likelihood ratio test}) permet de valider si la fonction de vraisemblance d'un modèle avec paramètres \emph{contraints} est proche de la fonction de vraisemblance maximisée lorsqu'il n'y a aucune contrainte sur les paramètres. Ce test a plusieurs applications, notamment ici et dans l'ajustement de modèles linéaires généralisés. On mesure le tout avec le ratio suivant : 
+Le test du rapport de vraisemblance (\emph{Likelihood ratio test}) permet de valider si la fonction de vraisemblance d'un modèle avec paramètres \emph{contraints} est proche de la fonction de vraisemblance maximisée lorsqu'il n'y a aucune contrainte sur les paramètres. Ce test a plusieurs applications, notamment ici et dans l'ajustement de modèles linéaires généralisés. Une application directe dans la \autoref{sec:likelihood-ratio-test} est présentée. En résumé, on la mesure statistique du test est  la suivante : 
 \begin{align*}
 \lambda = \frac{L(\hat{\theta}_0)}{L(\hat{\theta})}
 \end{align*}
@@ -1189,7 +1189,7 @@ f(x ; \alpha)	& = \derivee{\alpha} F(x ; \alpha) \\
 \item Les fonctions de vraisemblance $L$ et log-vraisemblance $\ell$ sont, respectivement
 \begin{align*}
 L(\alpha)	& = \prod_{i=1}^{20} f(x_i ; \alpha) \\
-& = \prod_{i=1}^{20} \frac{\alpha 100^\alpha}{x+i^{\alpha+1}}  \\
+& = \prod_{i=1}^{20} \frac{\alpha 100^\alpha}{x^{\alpha+1}}  \\
 \end{align*}
 et 
 \begin{align*}
@@ -1241,11 +1241,31 @@ Les exercices recommandés dans le \emph{Loss Models, 4\up{th} edition} pour ce 
 
 
 \chapter{Sélection de modèles (16)}
-Ce chapitre a été vu avant le chapitre 15 dans le cours
+\section{Introduction}
+Il existe plusieurs tests (graphiques, tests d'hypothèses, etc.) pour valider si un modèle est adéquat. Les 2 tests vus dans le cadre du cours sont le 
+
+Souvent, certaines valeurs de ces tests peuvent aussi être utilisé pour comparer différents modèles entre-eux. 
+
+\section{\emph{Goodness-of-fit} Chi-Square test}
+\label{sec:goodness-of-fit}
+
+
+\section{\emph{Likelihood Ratio Test} (LRT)}
+\label{sec:likelihood-ratio-test}
+
+
+
+
+
 
 
 \section{Exercices recommandés}
-16.4,16.5,16.10 à 16.15,16.23,16.24
+\begin{description}
+\item[Test Kolmogorov-Smirnov] 16.4 et 16.5\footnote{Cette matière n'est pas testée à l'examen final A2018 en IARD1.}
+\item[Goodness-of-fit test et LRT] 16.10 à 16.15
+\item[Critères de sélection] 16.23 et 16.24
+\end{description}
+
 
 
 
